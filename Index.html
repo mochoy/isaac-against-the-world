@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Isaac Against the World</title>
+    </head>
+    <body>  
+        <div width=100% align = center > <b> <font size = 32> Isaac Against the World </font> </b>
+        
+            <div id="phaser-example" class="phaser-example"></div>
+
+            <div id="gameDiv" class="game-area"></div>
+            
+            <script src="phaser.min.js"></script>
+            <script src="MainGame.js"></script>
+
+            <script>
+                var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example');
+                game.state.add("game", gameVar);
+                game.state.start("game");
+            </script> 
+        
+            <table width = 70%> <tr> <td> Player 1 <br /> Player 1 is African-American Guy <br /> Controls: WASD <br /> V to shoot <br /> C & B to Change Weapons </td> <td align = right> Player 2  <br /> Player 2 is White Guy <br /> Controls: Arrow Keys <br /> K to Shoot <br /> J & L to Change Weapons </td> </tr> </table>
+            
+        </div>
+
+    </body>
+</html>
