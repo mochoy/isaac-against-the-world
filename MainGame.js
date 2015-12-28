@@ -71,6 +71,7 @@ var gunP1Stuff = {
     explosion: null,
     bulletsToSpawn: 1,
     images: ["pistolIMG", "shotgunIMG", "machineGunIMG", "rocketLauncherIMG"],
+    weaponInaccuracy: 100,      //higher = more inaccurate
     
     switchGuns: function(){
         if (this.currentGunP1 > 16 ){
@@ -84,18 +85,21 @@ var gunP1Stuff = {
             this.bulletsToSpawn = 1;
             this.fireRateP1 = 300;
             this.currentGunNumP1 = 1;
+            this.weaponInaccuracy = 100;
             console.log("current gun is Pistol");
             return this.images[0];
         } else if (this.currentGunP1 >= 5 && this.currentGunP1 <= 8){
             this.bulletsToSpawn = 5;
             this.fireRateP1 = 500;
             this.currentGunNumP1 = 2;
+            this.weaponInaccuracy = 1000;
             console.log("current gun is shotgun");
             return this.images[1];
         } else if (this.currentGunP1 >= 9 && this.currentGunP1 <= 12){
             this.bulletsToSpawn = 1;
             this.fireRateP1 = 50;
             this.currentGunNumP1 = 3;
+            this.weaponInaccuracy = 250;
             console.log("current gun is machine gune");
             return this.images[2];
         } else {
@@ -103,6 +107,7 @@ var gunP1Stuff = {
             this.bulletsToSpawn = 1;
             this.fireRateP1 = 750;
             this.currentGunNumP1 = 4;
+            this.weaponInaccuracy = 300;
             return this.images[3];
         }
     }
@@ -117,6 +122,7 @@ var gunP2Stuff = {
     explosion: null,
     bulletsToSpawn: 1,
     images: ["pistolIMG", "shotgunIMG", "machineGunIMG", "rocketLauncherIMG"],
+    weaponInaccuracy: 100,      //higher = more inaccurate
     
     switchGuns: function(){
         if (this.currentGunP2 > 16 ){
@@ -130,18 +136,21 @@ var gunP2Stuff = {
             this.bulletsToSpawn = 1;
             this.fireRateP2 = 300;
             this.currentGunNumP2 = 1;
+            this.weaponInaccuracy = 100;
             console.log("current gun is Pistol");
             return this.images[0];
         } else if (this.currentGunP2 >= 5 && this.currentGunP2 <= 8){
             this.bulletsToSpawn = 5;
             this.fireRateP2 = 500;
             this.currentGunNumP2 = 2;
+            this.weaponInaccuracy = 1000;
             console.log("current gun is shotgun");
             return this.images[1];
         } else if (this.currentGunP2 >= 9 && this.currentGunP2 <= 12){
-            this.bulletsToSpawn = 2;
+            this.bulletsToSpawn = 1;
             this.fireRateP2 = 50;
             this.currentGunNumP2 = 3;
+            this.weaponInaccuracy = 250;
             console.log("current gun is machine gune");
             return this.images[2];
         } else {
@@ -149,6 +158,7 @@ var gunP2Stuff = {
             this.bulletsToSpawn = 1;
             this.fireRateP2 = 750;
             this.currentGunNumP2 = 4;
+            this.weaponInaccuracy = 400;
             return this.images[3];
         }
     }
@@ -325,7 +335,7 @@ var gameVar = {
             gunP1Stuff.gun1P1.fireRate = 300;
             gunP1Stuff.gun1P1.fireRateP1 = 300;
             gunP1Stuff.fireRateP1 = 300;
-            
+            gunP1Stuff.weaponInaccuracy = 100;
             gunP1Stuff.currentGunP1  = 1;
             gunP1Stuff.currentGunNumP1 = 1;
             
@@ -351,8 +361,7 @@ var gameVar = {
             gunP2Stuff.gun1P2.fireRate = 300;
             gunP2Stuff.gun1P2.fireRateP2 = 300;
             gunP2Stuff.fireRateP2 = 300;
-
-            
+            gunP2Stuff.weaponInaccuracy = 100;
             gunP2Stuff.currentGunP2  = 1;
             gunP2Stuff.currentGunNumP2 = 1;
             
@@ -748,14 +757,20 @@ var gameVar = {
                             } else if (gunP1Stuff.currentGunNumP1 == 4){
                                 this.rocketLaunchSound.play();
                             }
-
-//                            this.pistolSound.play();
+                            
+                            if (i <= 0) {
+                              if ( (hiFacingDirection == 0)||(hiFacingDirection == 1) ){
+                                helper.bullets.body.velocity.x = gunP1Stuff.weaponInaccuracy*(Math.random() - 0.5);
+                              } else {
+                                helper.bullets.body.velocity.y = gunP1Stuff.weaponInaccuracy*(Math.random() - 0.5);
+                              }
+                            }
 
                             if ((i > 0) && ((hiFacingDirection == 0)||(hiFacingDirection == 1))) {
-                                helper.bullets.body.velocity.x = 1000*(Math.random()- 0.5);
+                                helper.bullets.body.velocity.x = gunP1Stuff.weaponInaccuracy*(Math.random()- 0.5);
 
                             } else if (i > 0) {
-                                helper.bullets.body.velocity.y = 1000*(Math.random()- 0.5);
+                                helper.bullets.body.velocity.y = gunP1Stuff.weaponInaccuracy*(Math.random()- 0.5);
                             }
                         }
 
@@ -942,11 +957,19 @@ var gameVar = {
                                 this.rocketLaunchSound.play();
                             }
                             
+                            if (w <= 0) {
+                              if ( (hiFacingDirection == 0)||(hiFacingDirection == 1) ){
+                                helper.bulletsP2.body.velocity.x = gunP2tuff.weaponInaccuracy*(Math.random() - 0.5);
+                              } else {
+                                helper.bulletsP2.body.velocity.y = gunP2tuff.weaponInaccuracy*(Math.random() - 0.5);
+                              }
+                            }
+                            
                             if ((w > 0) && ((p2FacingDirection == 0)||(p2FacingDirection == 1))) {
-                                helper.bulletsP2.body.velocity.x = 1000*(Math.random()- 0.5);
+                                helper.bulletsP2.body.velocity.x = gunP2tuff.weaponInaccuracy*(Math.random()- 0.5);
 
                             } else if (w > 0) {
-                                helper.bulletsP2.body.velocity.y = 1000*(Math.random()- 0.5);
+                                helper.bulletsP2.body.velocity.y = gunP2tuff.weaponInaccuracy*(Math.random()- 0.5);
                             }
                         }
 
