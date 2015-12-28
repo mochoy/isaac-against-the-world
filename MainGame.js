@@ -1145,21 +1145,10 @@ var gameVar = {
         
         if (this.gameState == 2){
 //            this.drawGame();
-            
-            for (var i = 0; i < enemyTest2ArrayP1.length; i++){
-//                if (!enemyTest2ArrayP1[i].isDead){
-                    enemyTest2ArrayP1[i].kill();
-//                }
-            }
-            for (var i = 0; i < enemyTest2ArrayP2.length; i++){
-//                if (!enemyTest2ArrayP1[i].isDead){
-                    enemyTest2ArrayP2[i].kill();
-//                }
-            }
-            
-            for (var i = 0; i < helper.splatArray.length; i++ ){
-                helper.splatArray[i].kill();
-            }
+
+            killAndRemoveAllFromArray(enemyTest2ArrayP1);
+            killAndRemoveAllFromArray(enemyTest2ArrayP2);
+            killAndRemoveAllFromArray(helper.splatArray);
                 
             hi.kill();
             healthTXTP1.kill();
@@ -1183,6 +1172,13 @@ function startGame(){
     gameVar.gameState = 1;
     gameVar.drawGame();
     
+}
+
+function killAndRemoveAllFromArray (arrayToKill){
+   while(arrayToKill.length > 0){
+      arrayToKill.pop().kill();
+  }
+  
 }
 
 /*    function shoot(){
