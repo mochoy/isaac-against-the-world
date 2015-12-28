@@ -191,7 +191,7 @@ var gameVar = {
     rocketLaunchSound: null,
     p1GunStuffText: null,
     p2GunStuffText: null,
-    enemySpawnLimit: 20,
+    enemySpawnLimit: 50,
     i: 0,
     w: 0,
     
@@ -312,9 +312,6 @@ var gameVar = {
             hi.scale.y = .25;
             hi.anchor.setTo(0.5);
             hi.animations.add('walkP1', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], 40, true);
-            
-            console.log(""+ hi.body.x);
-            console.log(""+ hi.body.y);
 
             gunP1Stuff.gun1P1 = game.add.sprite(-25 + hi.body.width/2, -75, "pistolIMG");
             game.physics.arcade.enable(gunP1Stuff.gun1P1);
@@ -427,7 +424,7 @@ var gameVar = {
             console.log("player 1");
             this.retryButton = game.add.button(game.world.centerX - 200, 400, 'retryButton', startGame, this, 3, 2, 1, 0);
             
-            this.enemySpawnLimit = 20;
+            this.enemySpawnLimit = 50;
             
 
         }
@@ -470,7 +467,7 @@ var gameVar = {
                 enemyTest2P2.animations.play("walkZombieP2");
             }
             helper.totalEnemySpawned ++;
-            this.enemySpawnLimit ++;
+            // this.enemySpawnLimit ++;
             
         }
         
@@ -500,9 +497,7 @@ var gameVar = {
             console.log("blood3 spawned");
             //blood3 spawned
         }*/
-        console.log(hi.body.x);
-        console.log(hi.body.y);
-        
+
         console.log("hit");
         
         if (bullet == helper.bullets && gunP1Stuff.currentGunNumP1 == 4){
@@ -550,8 +545,6 @@ var gameVar = {
         bloodSpat.scale.y = .2;
         helper.splatArray.push(bloodSpat);
 
-        console.log("blood spawned!");
-        
 /*        if (bloodToSpawn == 1){
             var bloodSplat = game.add.sprite(0, 0 , "zombieIMG");
             bloodSplat.scale.x = .2;
@@ -590,9 +583,7 @@ var gameVar = {
             scoreTXTP2.text = "Score: " + scoreP2;
             p2Stuff.totalKilledP2 ++;
         }
-        
-        console.log(""+ hi.body.x);
-        console.log(""+ hi.body.y);
+
         this.reDrawEveryThing();
         
 //        enemyTest2 = game.add.sprite(300, 300, "zombieIMG");
@@ -690,10 +681,6 @@ var gameVar = {
 
                 p2.body.velocity.x = 0;
                 p2.body.velocity.y = 0;
-
-        //        bullet = game.add.group();
-        //        game.physics.arcade.enable(bullet);
-        //        bullet.enableBody = true;
                 
                 if (this.mainMenuScreen != null){
                     this.mainMenuScreen.kill();
@@ -740,8 +727,15 @@ var gameVar = {
                                 helper.bullets.angle = 270;
                             }
                             
-                            helper.bullets.scale.x = .02;
-                            helper.bullets.scale.y = .04;
+                            if (gunP1Stuff.currentGunNumP1 == 4){
+                              console.log("current gun is rocket");
+                              helper.bullets.scale.x = 0.04;
+                              helper.bullets.scale.y = 0.08;
+                            } else {
+                              helper.bullets.scale.x = .02;
+                              helper.bullets.scale.y = .04;
+                            }
+                            
                             helper.bullets.outOfBoundsKill = true;
                             helper.bulletArrayP1.push(helper.bullets);
                             
@@ -910,8 +904,16 @@ var gameVar = {
                             
                             helper.bulletsP2 = game.add.sprite(bulletSpawnX , bulletSpawnY , "bulletIMG");
                             game.physics.arcade.enable(helper.bulletsP2);
-                            helper.bulletsP2.scale.x = .02;
-                            helper.bulletsP2.scale.y = .04;
+                            
+                           if (gunP2Stuff.currentGunNumP2 == 4){
+                              console.log("current gun is rocket");
+                              helper.bulletsP2.scale.x = 0.04;
+                              helper.bulletsP2.scale.y = 0.08;
+                            } else {
+                              helper.bulletsP2.scale.x = .02;
+                              helper.bulletsP2.scale.y = .04;
+                            }
+                            
                             helper.bulletsP2.outOfBoundsKill = true;
                             helper.bulletArrayP1.push(helper.bulletsP2);
 
@@ -958,12 +960,20 @@ var gameVar = {
                     
                     if (gunP2Stuff.currentGunP2  == 1 ){
                         this.p2GunStuffText.text = "Pistol";
+                        gunP2Stuff.gun1P2.scale.x = 0.3;
+                        gunP2Stuff.gun1P2.scale.y = 0.3;
                     } else if (gunP2Stuff.currentGunNumP2 == 2){
                         this.p2GunStuffText.text = "Shotgun";
+                        gunP2Stuff.gun1P2.scale.x = 0.5;
+                        gunP2Stuff.gun1P2.scale.y = 0.5;
                     } else if (gunP2Stuff.currentGunNumP2 == 3){
                         this.p2GunStuffText.text = "Machine Gun";
+                        gunP2Stuff.gun1P2.scale.x = 0.5;
+                        gunP2Stuff.gun1P2.scale.y = 0.5;
                     } else if (gunP2Stuff.currentGunNumP2 == 4){
                         this.p2GunStuffText.text = "Rocket Launcher";
+                        gunP2Stuff.gun1P2.scale.x = 0.5;
+                        gunP2Stuff.gun1P2.scale.y = 0.5;
                     }
                 }
                 if (keyC.isDown){
@@ -972,12 +982,20 @@ var gameVar = {
                     
                     if (gunP2Stuff.currentGunP2  == 1 ){
                         this.p2GunStuffText.text = "Pistol";
+                        gunP2Stuff.gun1P2.scale.x = 0.3;
+                        gunP2Stuff.gun1P2.scale.y = 0.3;
                     } else if (gunP2Stuff.currentGunNumP2 == 2){
                         this.p2GunStuffText.text = "Shotgun";
+                        gunP2Stuff.gun1P2.scale.x = 0.5;
+                        gunP2Stuff.gun1P2.scale.y = 0.5;
                     } else if (gunP2Stuff.currentGunNumP2 == 3){
                         this.p2GunStuffText.text = "Machine Gun";
+                        gunP2Stuff.gun1P2.scale.x = 0.5;
+                        gunP2Stuff.gun1P2.scale.y = 0.5;
                     } else if (gunP2Stuff.currentGunNumP2 == 4){
                         this.p2GunStuffText.text = "Rocket Launcher";
+                        gunP2Stuff.gun1P2.scale.x = 0.5;
+                        gunP2Stuff.gun1P2.scale.y = 0.5;
                     }
                 }
 
@@ -1149,6 +1167,20 @@ var gameVar = {
             killAndRemoveAllFromArray(enemyTest2ArrayP1);
             killAndRemoveAllFromArray(enemyTest2ArrayP2);
             killAndRemoveAllFromArray(helper.splatArray);
+
+/*           while(enemyTest2ArrayP1.length > 0){
+                    enemyTest2ArrayP1.pop().kill();
+            }
+            
+            for (var i = 0; i < enemyTest2ArrayP2.length; i++){
+                    enemyTest2ArrayP2[i].kill();
+            }
+            
+            for (var i = 0; i < helper.splatArray.length; i++ ){
+                helper.splatArray[i].kill();
+            }
+*/
+            
                 
             hi.kill();
             healthTXTP1.kill();
