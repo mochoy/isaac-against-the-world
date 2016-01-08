@@ -1,4 +1,4 @@
-//MainGam.js 1-6-2016 Monty - no changes, just this comment
+//MainGame.js 1-7-2016 JChoy added missing e
 //var centerGameX = game.world.centerX;
 //var centerGameY = game.world.centerY;
 
