@@ -1,4 +1,4 @@
-//MainGame.js 1-8-2016 JChoy Flagger
+//MainGame.js 1-8-2016 JChoy reverse logic
 //var centerGameX = game.world.centerX;
 //var centerGameY = game.world.centerY;
 
@@ -694,7 +694,7 @@ var gameVar = {
     player1HitEnemy: function(player, enemy){
       // enemy.play("enemyTest2P1AtkAnim");
 
-      if (enemy.isRunning) {
+      if (!enemy.isRunning) {
       	var fl = new Flagger(enemy);
       	fl.set();	//isRunning=true;
       	setTimeout( new OOCallback(fl,"clear").fcn, 2000 );	//isRunning=false;
