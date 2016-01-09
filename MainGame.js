@@ -1,4 +1,4 @@
-//MainGame.js 1-8-2016 JChoy reverse logic
+//MainGame.js 1-8-2016 JChoy setIdiot members
 //var centerGameX = game.world.centerX;
 //var centerGameY = game.world.centerY;
 
@@ -88,11 +88,13 @@ function EnemyCollider(){
 var enemyCollider1 = new EnemyCollider();
 
 var gunP1Stuff = {
-    numOfGunsP1: 4,
-    currentGunP1: 1,
-    currentGunNumP1: 1,
-    fireRateP1: null,
-    explosionArrayP1: new Array(),
+    //stupid members, some code knows these as xxP1 or xxP2.
+    numOfGuns: 4,
+    currentGun: 1,
+    currentGunNum: 1,
+    fireRate: null,
+    explosionArray: new Array(),
+    //normal members
     explosion: null,
     bulletsToSpawn: 1,
     images: ["pistolIMG", "shotgunIMG", "machineGunIMG", "rocketLauncherIMG"],
@@ -101,6 +103,9 @@ var gunP1Stuff = {
     shotgunBullets: 25,
     machineGunBullets: 100,
     rocketBullets: 10,
+    setIdiotMembers: function(suf){
+  	for (var m in this) this[m+"suf"] = this[m];
+    },
     
     switchGuns: function(){
         if (this.currentGunP1 > 16 ){
@@ -137,77 +142,31 @@ var gunP1Stuff = {
             this.fireRateP1 = 750;
             this.currentGunNumP1 = 4;
             this.weaponInaccuracy = 300;
-            return this.images[3];
-        }
-    }
-}
-
-var gunP2Stuff = {
-    numOfGunsP2: 4,
-    currentGunP2: 1,
-    currentGunNumP2: 1,
-    fireRateP2: 300,
-    explosionArrayP2: new Array(),
-    explosion: null,
-    bulletsToSpawn: 1,
-    images: ["pistolIMG", "shotgunIMG", "machineGunIMG", "rocketLauncherIMG"],
-    weaponInaccuracy: 100,      //higher = more inaccurate
-    // pistolBullets: 25,
-    shotgunBullets: 25,
-    machineGunBullets: 100,
-    rocketBullets: 10,
-    
-    switchGuns: function(){
-        if (this.currentGunP2 > 16 ){
-            this.currentGunP2 = 1;
-            console.log("fds");
-        } else if (this.currentGunP2 <= 0){
-            this.currentGunP2 = 16;
-            console.log("yuyju");
-        }
-        if(this.currentGunP2 >= 1 && this.currentGunP2 <= 4){
-            this.bulletsToSpawn = 1;
-            this.fireRateP2 = 300;
-            this.currentGunNumP2 = 1;
-            this.weaponInaccuracy = 100;
-            console.log("current gun is Pistol");
-            return this.images[0];
-        } else if (this.currentGunP2 >= 5 && this.currentGunP2 <= 8){
-            this.bulletsToSpawn = 5;
-            this.fireRateP2 = 500;
-            this.currentGunNumP2 = 2;
-            this.weaponInaccuracy = 1000;
-            console.log("current gun is shotgun");
-            return this.images[1];
-        } else if (this.currentGunP2 >= 9 && this.currentGunP2 <= 12){
-            this.bulletsToSpawn = 1;
-            this.fireRateP2 = 50;
-            this.currentGunNumP2 = 3;
-            this.weaponInaccuracy = 250;
-            console.log("current gun is machine gune");
-            return this.images[2];
-        } else {
-            console.log("current gun is rocket launcher");
-            this.bulletsToSpawn = 1;
-            this.fireRateP2 = 750;
-            this.currentGunNumP2 = 4;
             this.weaponInaccuracy = 400;
             return this.images[3];
         }
     }
 }
 
+var gunP2Stuff = new Cloner(gunP1Stuff).copy
+gunP1Stuff.setIdiotMembers("P1");
+gunP2Stuff.setIdiotMembers("P2");
+
+
 var p1Stuff = {
   maxHealth: 100,
   healthBarRed: null,
   healthBarGreen: null,
-  totalKilledP1: 0,
-  totalDMGTakenP1: 0
+  totalKilled: 0,
+  totalDMGTaken: 0
+  setIdiotMembers: function(suf){
+  	for (var m in this) this[m+"suf"] = this[m];
+  }
 }
 
 var p2Stuff = new Cloner(p1Stuff).copy;
-p2Stuff.totalKilledP2= 0;
-p2Stuff.totalDMGTakenP2= 0;
+p1Stuff.setIdiotMemebers("P1");
+p2Stuff.setIdiotMemebers("P2");
 
 var enemyCollisionGroup, bulletCollisionGroup;
 var bulletTime = 0;
