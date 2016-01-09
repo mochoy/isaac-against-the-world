@@ -1,4 +1,4 @@
-//MainGame.js 1-7-2016 JChoy added missing e
+//MainGame.js 1-8-2016 JChoy Flagger
 //var centerGameX = game.world.centerX;
 //var centerGameY = game.world.centerY;
 
@@ -6,6 +6,30 @@
 ////    cx:400,
 ////    cy:300
 //}
+
+//-----
+function OOCallback(obj,meth,arg){
+	var _pt= this;
+	_pt.obj = obj;
+	_pt.meth = meth;
+	_pt.arg = arg;
+	this.fcn= function(a,b,c,d,e){ _pt.obj[_pt.meth](a,b,c,d,e); }
+	this.fcna= function(b,c,d){ _pt.obj[_pt.meth](_pt.arg,b,c,d);}
+}
+function Cloner(o){
+	this.copy = {};
+	for (var m in o) this.copy[m]= o[m];
+}
+function Flagger(o, flagName){
+	this.client = o;
+	this.flagName = (flagName) ? flagName : "isRunning";
+	this.set= function(){ this.client[this.flagName]= true }
+	this.clear= function(){ this.client[this.flagName]= false }
+}
+function CanFlagger(o){
+	this.constructor= Flagger;
+	this.constructor(o, "canPlayAnimation");
+}
 
 var hi, enemyTest, enemyTest2P2, enemyTest2P1;
 var paused;
@@ -181,13 +205,9 @@ var p1Stuff = {
   totalDMGTakenP1: 0
 }
 
-var p2Stuff = {
-  maxHealth: 100,
-  healthBarRed: null,
-  healthBarGreen: null,
-  totalKilledP2: 0,
-  totalDMGTakenP2: 0
-}
+var p2Stuff = new Cloner(p1Stuff).copy;
+p2Stuff.totalKilledP2= 0;
+p2Stuff.totalDMGTakenP2= 0;
 
 var enemyCollisionGroup, bulletCollisionGroup;
 var bulletTime = 0;
@@ -200,6 +220,7 @@ var scoreP2 = 0, healthP2 = 100;
 var healthTXTP1, scoreTXTP1, healthTXTP2, scoreTXTP2;
 
 var keyW, keyA, keyS, keyD, keyV, keyP, keyK, keyL, keyJ, keyQ, keyE, keyC, keyB, keyT;
+//You need to go cold turkey and stop declaring ANY more global variables.
 
 var gameVar = {
     gameState: 0, //0 = start menu, 1 = in game, 3 = dead
@@ -672,17 +693,17 @@ var gameVar = {
     
     player1HitEnemy: function(player, enemy){
       // enemy.play("enemyTest2P1AtkAnim");
-      enemy.canPlayAnimation = true;
-      
-      if (enemy.canPlayAnimation) {
+
+      if (enemy.isRunning) {
+      	var fl = new Flagger(enemy);
+      	fl.set();	//isRunning=true;
+      	setTimeout( new OOCallback(fl,"clear").fcn, 2000 );	//isRunning=false;
+      	
         enemy.loadTexture("zombieAtkAnim", 0);
         anim = enemy.animations.add("attackAnim");
         enemy.animations.play("attackAnim", 40, false);
         
-        // enemy.animations.anim.onComplete.add(function () {
-  	     // console.log('animation complete');
-        // }, this);
-        
+        enemy.events.onAnimationComplete.add( new OOCallback(fl,"clear").fcn, this );
         enemy.events.onAnimationComplete.add(function(){
   			  console.log("complete");
   			  if (player == hi){
@@ -703,7 +724,7 @@ var gameVar = {
           enemy.animations.play("walkZombieP2", 40, true);
 
   		  }, this);
-      }
+      }//if
 		  
     },
     
