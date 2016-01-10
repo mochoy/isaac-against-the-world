@@ -1,4 +1,4 @@
-//MainGam.js 1-6-2016 Monty - no changes, just this comment
+//MainGame.js 1-8-2016 JChoy setIdiot members
 //var centerGameX = game.world.centerX;
 //var centerGameY = game.world.centerY;
 
@@ -6,6 +6,30 @@
 ////    cx:400,
 ////    cy:300
 //}
+
+//-----
+function OOCallback(obj,meth,arg){
+	var _pt= this;
+	_pt.obj = obj;
+	_pt.meth = meth;
+	_pt.arg = arg;
+	this.fcn= function(a,b,c,d,e){ _pt.obj[_pt.meth](a,b,c,d,e); }
+	this.fcna= function(b,c,d){ _pt.obj[_pt.meth](_pt.arg,b,c,d);}
+}
+function Cloner(o){
+	this.copy = {};
+	for (var m in o) this.copy[m]= o[m];
+}
+function Flagger(o, flagName){
+	this.client = o;
+	this.flagName = (flagName) ? flagName : "isRunning";
+	this.set= function(){ this.client[this.flagName]= true }
+	this.clear= function(){ this.client[this.flagName]= false }
+}
+function CanFlagger(o){
+	this.constructor= Flagger;
+	this.constructor(o, "canPlayAnimation");
+}
 
 var hi, enemyTest, enemyTest2P2, enemyTest2P1;
 var paused;
@@ -64,11 +88,13 @@ function EnemyCollider(){
 var enemyCollider1 = new EnemyCollider();
 
 var gunP1Stuff = {
-    numOfGunsP1: 4,
-    currentGunP1: 1,
-    currentGunNumP1: 1,
-    fireRateP1: null,
-    explosionArrayP1: new Array(),
+    //stupid members, some code knows these as xxP1 or xxP2.
+    numOfGuns: 4,
+    currentGun: 1,
+    currentGunNum: 1,
+    fireRate: null,
+    explosionArray: new Array(),
+    //normal members
     explosion: null,
     bulletsToSpawn: 1,
     images: ["pistolIMG", "shotgunIMG", "machineGunIMG", "rocketLauncherIMG"],
@@ -77,6 +103,9 @@ var gunP1Stuff = {
     shotgunBullets: 25,
     machineGunBullets: 100,
     rocketBullets: 10,
+    setIdiotMembers: function(suf){
+  	for (var m in this) this[m+"suf"] = this[m];
+    },
     
     switchGuns: function(){
         if (this.currentGunP1 > 16 ){
@@ -113,81 +142,31 @@ var gunP1Stuff = {
             this.fireRateP1 = 750;
             this.currentGunNumP1 = 4;
             this.weaponInaccuracy = 300;
-            return this.images[3];
-        }
-    }
-}
-
-var gunP2Stuff = {
-    numOfGunsP2: 4,
-    currentGunP2: 1,
-    currentGunNumP2: 1,
-    fireRateP2: 300,
-    explosionArrayP2: new Array(),
-    explosion: null,
-    bulletsToSpawn: 1,
-    images: ["pistolIMG", "shotgunIMG", "machineGunIMG", "rocketLauncherIMG"],
-    weaponInaccuracy: 100,      //higher = more inaccurate
-    // pistolBullets: 25,
-    shotgunBullets: 25,
-    machineGunBullets: 100,
-    rocketBullets: 10,
-    
-    switchGuns: function(){
-        if (this.currentGunP2 > 16 ){
-            this.currentGunP2 = 1;
-            console.log("fds");
-        } else if (this.currentGunP2 <= 0){
-            this.currentGunP2 = 16;
-            console.log("yuyju");
-        }
-        if(this.currentGunP2 >= 1 && this.currentGunP2 <= 4){
-            this.bulletsToSpawn = 1;
-            this.fireRateP2 = 300;
-            this.currentGunNumP2 = 1;
-            this.weaponInaccuracy = 100;
-            console.log("current gun is Pistol");
-            return this.images[0];
-        } else if (this.currentGunP2 >= 5 && this.currentGunP2 <= 8){
-            this.bulletsToSpawn = 5;
-            this.fireRateP2 = 500;
-            this.currentGunNumP2 = 2;
-            this.weaponInaccuracy = 1000;
-            console.log("current gun is shotgun");
-            return this.images[1];
-        } else if (this.currentGunP2 >= 9 && this.currentGunP2 <= 12){
-            this.bulletsToSpawn = 1;
-            this.fireRateP2 = 50;
-            this.currentGunNumP2 = 3;
-            this.weaponInaccuracy = 250;
-            console.log("current gun is machine gune");
-            return this.images[2];
-        } else {
-            console.log("current gun is rocket launcher");
-            this.bulletsToSpawn = 1;
-            this.fireRateP2 = 750;
-            this.currentGunNumP2 = 4;
             this.weaponInaccuracy = 400;
             return this.images[3];
         }
     }
 }
 
+var gunP2Stuff = new Cloner(gunP1Stuff).copy
+gunP1Stuff.setIdiotMembers("P1");
+gunP2Stuff.setIdiotMembers("P2");
+
+
 var p1Stuff = {
   maxHealth: 100,
   healthBarRed: null,
   healthBarGreen: null,
-  totalKilledP1: 0,
-  totalDMGTakenP1: 0
+  totalKilled: 0,
+  totalDMGTaken: 0
+  setIdiotMembers: function(suf){
+  	for (var m in this) this[m+"suf"] = this[m];
+  }
 }
 
-var p2Stuff = {
-  maxHealth: 100,
-  healthBarRed: null,
-  healthBarGreen: null,
-  totalKilledP2: 0,
-  totalDMGTakenP2: 0
-}
+var p2Stuff = new Cloner(p1Stuff).copy;
+p1Stuff.setIdiotMemebers("P1");
+p2Stuff.setIdiotMemebers("P2");
 
 var enemyCollisionGroup, bulletCollisionGroup;
 var bulletTime = 0;
@@ -200,6 +179,7 @@ var scoreP2 = 0, healthP2 = 100;
 var healthTXTP1, scoreTXTP1, healthTXTP2, scoreTXTP2;
 
 var keyW, keyA, keyS, keyD, keyV, keyP, keyK, keyL, keyJ, keyQ, keyE, keyC, keyB, keyT;
+//You need to go cold turkey and stop declaring ANY more global variables.
 
 var gameVar = {
     gameState: 0, //0 = start menu, 1 = in game, 3 = dead
@@ -672,17 +652,17 @@ var gameVar = {
     
     player1HitEnemy: function(player, enemy){
       // enemy.play("enemyTest2P1AtkAnim");
-      enemy.canPlayAnimation = true;
-      
-      if (enemy.canPlayAnimation) {
+
+      if (!enemy.isRunning) {
+      	var fl = new Flagger(enemy);
+      	fl.set();	//isRunning=true;
+      	setTimeout( new OOCallback(fl,"clear").fcn, 2000 );	//isRunning=false;
+      	
         enemy.loadTexture("zombieAtkAnim", 0);
         anim = enemy.animations.add("attackAnim");
         enemy.animations.play("attackAnim", 40, false);
         
-        // enemy.animations.anim.onComplete.add(function () {
-  	     // console.log('animation complete');
-        // }, this);
-        
+        enemy.events.onAnimationComplete.add( new OOCallback(fl,"clear").fcn, this );
         enemy.events.onAnimationComplete.add(function(){
   			  console.log("complete");
   			  if (player == hi){
@@ -703,7 +683,7 @@ var gameVar = {
           enemy.animations.play("walkZombieP2", 40, true);
 
   		  }, this);
-      }
+      }//if
 		  
     },
     
