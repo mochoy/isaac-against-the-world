@@ -1,4 +1,4 @@
-//MainGame.js 1-9-2016 JChoy fix weapon-switching for P2
+//MainGame.js 1-9-2016 JChoy source version on right-click
 
 //var centerGameX = game.world.centerX;
 //var centerGameY = game.world.centerY;
@@ -7,6 +7,11 @@
 ////    cx:400,
 ////    cy:300
 //}
+
+document.getElementsByTagName("div")[0].onmousedown= function(){
+    var e= window.event;
+    if (e.which === 3 || e.button === 2) alert("v1.112-551")
+}
 
 //-----
 function OOCallback(obj,meth,arg){
