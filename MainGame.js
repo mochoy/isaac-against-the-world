@@ -1,4 +1,6 @@
-//MainGame.js 1-8-2016 JChoy setIdiot members
+//MainGame.js 1-9-2016 JChoy trying to fix weapon-switching for P2
+//bug: P2 weapon doesn't change when key is pressed
+
 //var centerGameX = game.world.centerX;
 //var centerGameY = game.world.centerY;
 
@@ -104,7 +106,7 @@ var gunP1Stuff = {
     machineGunBullets: 100,
     rocketBullets: 10,
     setIdiotMembers: function(suf){
-  	for (var m in this) this[m+"suf"] = this[m];
+  	for (var m in this) this[m+suf] = this[m];
     },
     
     switchGuns: function(){
@@ -149,8 +151,10 @@ var gunP1Stuff = {
 }
 
 var gunP2Stuff = new Cloner(gunP1Stuff).copy
+gunP2Stuff.explosionArray = new Array();
 gunP1Stuff.setIdiotMembers("P1");
 gunP2Stuff.setIdiotMembers("P2");
+gunP2Stuff.setIdiotMembers("P1");
 
 
 var p1Stuff = {
@@ -160,7 +164,7 @@ var p1Stuff = {
   totalKilled: 0,
   totalDMGTaken: 0,
   setIdiotMembers: function(suf){
-  	for (var m in this) this[m+"suf"] = this[m];
+  	for (var m in this) this[m+suf] = this[m];
   }
 }
 
