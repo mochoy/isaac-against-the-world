@@ -1,5 +1,4 @@
-//MainGame.js 1-9-2016 JChoy trying to fix weapon-switching for P2
-//bug: P2 weapon doesn't change when key is pressed
+//MainGame.js 1-9-2016 JChoy fix weapon-switching for P2
 
 //var centerGameX = game.world.centerX;
 //var centerGameY = game.world.centerY;
@@ -1072,16 +1071,8 @@ var gameVar = {
                 }
 
                 if (keyB.isDown){
-                    gunP2Stuff.currentGunP2 ++;
+                    gunP2Stuff.currentGunP1 ++;
                     gunP2Stuff.gun1P2.loadTexture(gunP2Stuff.switchGuns());
-                    
-                    if (gunP2Stuff.currentGunP2 >= 16 ){
-                        gunP2Stuff.currentGunP2 = 1;
-                        console.log("fds");
-                    } else if ( gunP2Stuff.currentGunP2 <= 0){
-                        gunP2Stuff.currentGunP2 = 16;
-                        console.log("yuyju");
-                    }
                     
                     if (gunP2Stuff.currentGunP2  == 1 ){
                         this.p2GunStuffText.text = "Pistol";
@@ -1103,16 +1094,7 @@ var gameVar = {
                     
                 }
                 if (keyC.isDown){
-                    gunP2Stuff.currentGunP2 --;
-                    
-                    if ( gunP2Stuff.currentGunP2 > 16 ){
-                       gunP2Stuff.currentGunP2 = 1;
-                      console.log("fds");
-                    } else if ( gunP2Stuff.currentGunP2 <= 0){
-                          gunP2Stuff.currentGunP2 = 16;
-                         console.log("yuyju");
-                    }
-                    
+                    gunP2Stuff.currentGunP1 --;
                     gunP2Stuff.gun1P2.loadTexture(gunP2Stuff.switchGuns());
                     
                     if (gunP2Stuff.currentGunP2  == 1 ){
