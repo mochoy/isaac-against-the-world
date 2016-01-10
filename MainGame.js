@@ -158,15 +158,15 @@ var p1Stuff = {
   healthBarRed: null,
   healthBarGreen: null,
   totalKilled: 0,
-  totalDMGTaken: 0
+  totalDMGTaken: 0,
   setIdiotMembers: function(suf){
   	for (var m in this) this[m+"suf"] = this[m];
   }
 }
 
 var p2Stuff = new Cloner(p1Stuff).copy;
-p1Stuff.setIdiotMemebers("P1");
-p2Stuff.setIdiotMemebers("P2");
+    p1Stuff.setIdiotMembers("P1");
+    p2Stuff.setIdiotMembers("P2");
 
 var enemyCollisionGroup, bulletCollisionGroup;
 var bulletTime = 0;
@@ -546,7 +546,7 @@ var gameVar = {
             explosionAnim = gunP1Stuff.explosion.animations.play('explodeAnim');
             explosionAnim.killOnComplete = true;
             
-            gunP1Stuff.explosionArrayP1.push(gunP1Stuff.explosion);
+            gunP1Stuff.explosionArray.push(gunP1Stuff.explosion);
             
             this.explosionSound.play();
         } else if (bullet == helper.bulletsP2 && gunP2Stuff.currentGunNumP2 == 4){
@@ -573,11 +573,11 @@ var gameVar = {
 //            explosion.animations.add('explodeAnim', [0, 1, 2, 3, 4, 5, 6], 10, false);
 //            explosion.animations.play('explodeAnim');
 //
-//            explosionArrayP1.push(explosion);
+//            explosionArray.push(explosion);
 //        }
         
         var bloodSpat = game.add.sprite(enemy.body.x,enemy.body.y, "blood");
-        bloodSpat.scale.x = .2;
+        bloodSpat.scale.x = .02;
         bloodSpat.scale.y = .2;
         helper.splatArray.push(bloodSpat);
 
@@ -1071,6 +1071,14 @@ var gameVar = {
                     gunP2Stuff.currentGunP2 ++;
                     gunP2Stuff.gun1P2.loadTexture(gunP2Stuff.switchGuns());
                     
+                    if (gunP2Stuff.currentGunP2 >= 16 ){
+                        gunP2Stuff.currentGunP2 = 1;
+                        console.log("fds");
+                    } else if ( gunP2Stuff.currentGunP2 <= 0){
+                        gunP2Stuff.currentGunP2 = 16;
+                        console.log("yuyju");
+                    }
+                    
                     if (gunP2Stuff.currentGunP2  == 1 ){
                         this.p2GunStuffText.text = "Pistol";
                         gunP2Stuff.gun1P2.scale.x = 0.3;
@@ -1088,9 +1096,19 @@ var gameVar = {
                         gunP2Stuff.gun1P2.scale.x = 0.5;
                         gunP2Stuff.gun1P2.scale.y = 0.5;
                     }
+                    
                 }
                 if (keyC.isDown){
-                    gunP2Stuff.currentGunP2 --
+                    gunP2Stuff.currentGunP2 --;
+                    
+                    if ( gunP2Stuff.currentGunP2 > 16 ){
+                       gunP2Stuff.currentGunP2 = 1;
+                      console.log("fds");
+                    } else if ( gunP2Stuff.currentGunP2 <= 0){
+                          gunP2Stuff.currentGunP2 = 16;
+                         console.log("yuyju");
+                    }
+                    
                     gunP2Stuff.gun1P2.loadTexture(gunP2Stuff.switchGuns());
                     
                     if (gunP2Stuff.currentGunP2  == 1 ){
@@ -1152,8 +1170,8 @@ var gameVar = {
                     enemy10.kill();
                 }
 
-                if (gunP1Stuff.explosionArrayP1.length > 3){
-                    var toKill = gunP1Stuff.explosionArrayP1.shift();
+                if (gunP1Stuff.explosionArray.length > 3){
+                    var toKill = gunP1Stuff.explosionArray.shift();
                     toKill.kill();
                 }
 
@@ -1165,9 +1183,9 @@ var gameVar = {
                     game.physics.arcade.collide(a, b, null, null, this);
                 } )
 
-    //            for (var i = 0; i < gunP1Stuff.explosionArrayP1.length; i++){
-    //                if (gunP1Stuff.explosionArrayP1[i].animations.isfinished() ){
-    //                    gunP1Stuff.explosionArrayP1[i].animation.kill();
+    //            for (var i = 0; i < gunP1Stuff.explosionArray.length; i++){
+    //                if (gunP1Stuff.explosionArray[i].animations.isfinished() ){
+    //                    gunP1Stuff.explosionArray[i].animation.kill();
     //
     //                }
     //            }
