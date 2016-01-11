@@ -175,7 +175,7 @@ var p1Stuff = {
 var wallStuff = {
     wallArray: new Array(),
     coordsX: [150, 100, 100, 350, 500, 500, 600, 460],
-    coordsY: [120, 400, 450, 250, 120, 120, 120, 450],
+    coordsY: [120, 425, 475, 250, 90, 90, 90, 450],
     scaleX: [0.03, 0.03, 0.2, 0.1, 0.03, 0.1, 0.03, 0.075],
     scaleY: [0.2, 0.06, 0.035, 0.1, 0.075, 0.035, 0.2, 0.075],
     
@@ -380,7 +380,7 @@ var gameVar = {
 
 
 
-            p2 = game.add.sprite(game.world.centerX/3 , game.world.centerY, "p2Anim");
+            p2 = game.add.sprite(260, game.world.centerY, "p2Anim");
             game.physics.arcade.enable(p2);
             game.physics.p2.enable(p2);
             p2.body.collideWorldBounds = true;
@@ -1342,6 +1342,7 @@ var gameVar = {
             killAndRemoveAllFromArray(helper.splatArray);
             killAndRemoveAllFromArray(helper.bulletArrayP1);
             killAndRemoveAllFromArray(helper.bulletArrayP1);
+            killAndRemoveAllFromArray(wallStuff.wallArray);
 
 /*           while(enemyTest2ArrayP1.length > 0){
                     enemyTest2ArrayP1.pop().kill();
