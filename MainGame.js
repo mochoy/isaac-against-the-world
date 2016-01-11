@@ -164,6 +164,26 @@ var p1Stuff = {
   }
 }
 
+var wallStuff = {
+    wallArray: new Array(),
+    coordsX: [150, 100, 100, 350, 500, 500, 600, 460],
+    coordsY: [120, 400, 450, 250, 120, 120, 120, 450],
+    scaleX: [0.03, 0.03, 0.2, 0.1, 0.03, 0.1, 0.03, 0.075],
+    scaleY: [0.2, 0.06, 0.035, 0.1, 0.075, 0.035, 0.2, 0.075],
+    
+    set: function(numXY, numToSet){
+        if (numXY == 1){
+            return this.coordsX[numToSet];
+        } else if (numXY == 2){
+            return this.coordsY[numToSet];
+        } else if (numXY == 3){
+            return this.scaleX[numToSet];        
+        } else if (numXY == 4){
+            return this.scaleY[numToSet];
+        }
+    }
+}
+
 var p2Stuff = new Cloner(p1Stuff).copy;
     p1Stuff.setIdiotMembers("P1");
     p2Stuff.setIdiotMembers("P2");
@@ -199,6 +219,7 @@ var gameVar = {
     enemySpawnLimit: 50,
     i: 0,
     w: 0,
+    wall: null,
     
     preload: function () {
         game.load.image("testIMG", 'Assets/ducksOnRollerCoasters.jpeg');
@@ -234,7 +255,9 @@ var gameVar = {
         
         game.load.image("healthBarRedIMG", "Assets/healthBarRed.jpg");
         game.load.image("healthBarGreenIMG", "Assets/healthBarGreen.jpg");
-         
+        
+        game.load.image("wallIMG", "Assets/greyBlock.jpg");
+        
         game.load.spritesheet("p1Anim", "Assets/player1SS.png", 256, 256);
         game.load.spritesheet("p2Anim", "Assets/player2SS.png", 256, 256);
                 
@@ -254,7 +277,6 @@ var gameVar = {
         game.load.audio('zombieSound', 'Assets/Audio/zombieSound.mp3');
         game.load.audio('machineGunSound', 'Assets/Audio/machineGunSound.mp3');
         game.load.audio('rocketLaunchSound', 'Assets/Audio/rocketLaunchSound.mp3');
-
 
     },
 
@@ -378,6 +400,15 @@ var gameVar = {
             
             p2Stuff.healthBarGreen = game.add.sprite(50, 30, "healthBarGreenIMG")
             p2Stuff.healthBarGreen.scale.y = 0.2;
+            
+            for (var i = 0; i < 8; i ++){
+                this.wall = game.add.sprite(wallStuff.set(1, (i)), wallStuff.set(2, (i)), "wallIMG");
+                game.physics.arcade.enable(this.wall);
+                this.wall.scale.x = wallStuff.set(3, (i));
+                this.wall.scale.y = wallStuff.set(4, (i));
+                wallStuff.wallArray.push(this.wall);
+            }
+
 
             this.p1GunStuffText = game.add.text(575, 475, "Pistol ", { font: '28px Arial', fill: '#ffffff' });
             this.p1GunStuffText.fill = "black";
