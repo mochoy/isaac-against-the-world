@@ -1,4 +1,6 @@
-//MainGame.js 1-9-2016 JChoy source version on right-click
+//MainGame.js 1-11-2016 Monte source version on right-click
+
+//static: http://phaser.io/examples/v2/p2-physics/static-body
 
 //var centerGameX = game.world.centerX;
 //var centerGameY = game.world.centerY;
@@ -419,9 +421,9 @@ var gameVar = {
                 this.wall.scale.x = wallStuff.set(3, (i));
                 this.wall.scale.y = wallStuff.set(4, (i));
                 game.physics.p2.enable( this.wall);
-                this.wall.body.static = true;
-                this.wall.body.mass = 100000;
-                this.wall.body.motionState = p2.body.STATIC;
+                // this.wall.body.static = true;
+                // this.wall.body.mass = 100000;
+                // this.wall.body.motionState = p2.body.STATIC;
                 wallStuff.wallArray.push(this.wall);
             }
 
@@ -1163,6 +1165,13 @@ var gameVar = {
                         gunP2Stuff.gun1P2.scale.y = 0.3;
                     }
                 }
+            
+            for (var i = 0; i < wallStuff.wallArray.length; i ++){
+                wallStuff.wallArray[i].x = wallStuff.set(1, (i));
+                wallStuff.wallArray[i].y = wallStuff.set(2, (i));
+                wallStuff.wallArray[i].scale.x = wallStuff.set(3, (i));
+                wallStuff.wallArray[i].scale.y = wallStuff.set(4, (i));
+            }
 
 
                 //collide players
