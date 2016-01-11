@@ -308,6 +308,8 @@ var gameVar = {
         this.machineGunSound = game.add.audio('machineGunSound');
         this.rocketLaunchSound = game.add.audio('rocketLaunchSound');
         
+    	game.physics.startSystem(Phaser.Physics.P2JS);
+        
         this.drawGame();
         
         game.input.keyboard.addKeyCapture([ Phaser.Keyboard.SPACEBAR ]);
@@ -344,6 +346,7 @@ var gameVar = {
             
             hi = game.add.sprite(game.world.centerX*4/3, game.world.centerY, "p1Anim");
             game.physics.arcade.enable(hi);
+            game.physics.p2.enable(hi);
             hi.body.collideWorldBounds = true;
             hi.frame = 1;
             hi.scale.x = .25;
@@ -379,6 +382,7 @@ var gameVar = {
 
             p2 = game.add.sprite(game.world.centerX/3 , game.world.centerY, "p2Anim");
             game.physics.arcade.enable(p2);
+            game.physics.p2.enable(p2);
             p2.body.collideWorldBounds = true;
             p2.scale.x = .25;
             p2.scale.y = .25;
@@ -414,6 +418,10 @@ var gameVar = {
                 game.physics.arcade.enable(this.wall);
                 this.wall.scale.x = wallStuff.set(3, (i));
                 this.wall.scale.y = wallStuff.set(4, (i));
+                game.physics.p2.enable( this.wall);
+                this.wall.body.static = true;
+                this.wall.body.mass = 100000;
+                this.wall.body.motionState = p2.body.STATIC;
                 wallStuff.wallArray.push(this.wall);
             }
 
@@ -1211,7 +1219,12 @@ var gameVar = {
     //
     //                }
     //            }
-
+                for (var i = 0; i < wallStuff.wallArray.length; i++){
+                     game.physics.arcade.collide(hi, wallStuff.wallArray[i], null, null, this);
+                     game.physics.arcade.collide(p2, wallStuff.wallArray[i], null, null, this);
+                }
+                
+                
                 for (var i = 0; i < enemyTest2ArrayP1.length; i++){
                     if (!enemyTest2ArrayP1[i].isDead){
                         enemyTest2ArrayP1[i].bringToTop();
@@ -1227,6 +1240,10 @@ var gameVar = {
 
                         game.physics.arcade.overlap(gunP1Stuff.explosion, enemyTest2ArrayP1[i], this.explosionHasHitEnemy, null, this);
                         game.physics.arcade.overlap(gunP2Stuff.explosion, enemyTest2ArrayP1[i], this.explosionHasHitEnemy, null, this);
+
+                        for (var t = 0; t < wallStuff.wallArray.length; t++){
+                            game.physics.arcade.collide(enemyTest2ArrayP1[i], wallStuff.wallArray[t], null, null, this);   
+                        }
 
 
                         /*                    if (bullets != null && enemyTest2ArrayP1[i] != null){
@@ -1253,6 +1270,10 @@ var gameVar = {
 
                         game.physics.arcade.overlap(gunP1Stuff.explosion, enemyTest2ArrayP2[i], this.explosionHasHitEnemy, null, this);
                         game.physics.arcade.overlap(gunP2Stuff.explosion, enemyTest2ArrayP2[i], this.explosionHasHitEnemy, null, this);
+
+                        for (var t = 0; t < wallStuff.wallArray.length; t++){
+                            game.physics.arcade.collide(enemyTest2ArrayP2[i], wallStuff.wallArray[t], null, null, this);   
+                        }
 
                     }
                 }
