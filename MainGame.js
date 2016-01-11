@@ -1,4 +1,5 @@
-//MainGame.js 1-8-2016 JChoy setIdiot members
+//MainGame.js 1-9-2016 JChoy source version on right-click
+
 //var centerGameX = game.world.centerX;
 //var centerGameY = game.world.centerY;
 
@@ -6,6 +7,11 @@
 ////    cx:400,
 ////    cy:300
 //}
+
+document.getElementsByTagName("div")[0].onmousedown= function(){
+    var e= window.event;
+    if (e.which === 3 || e.button === 2) alert("v1.112-551")
+}
 
 //-----
 function OOCallback(obj,meth,arg){
@@ -104,7 +110,7 @@ var gunP1Stuff = {
     machineGunBullets: 100,
     rocketBullets: 10,
     setIdiotMembers: function(suf){
-  	for (var m in this) this[m+"suf"] = this[m];
+  	for (var m in this) this[m+suf] = this[m];
     },
     
     switchGuns: function(){
@@ -149,8 +155,10 @@ var gunP1Stuff = {
 }
 
 var gunP2Stuff = new Cloner(gunP1Stuff).copy
+gunP2Stuff.explosionArray = new Array();
 gunP1Stuff.setIdiotMembers("P1");
 gunP2Stuff.setIdiotMembers("P2");
+gunP2Stuff.setIdiotMembers("P1");
 
 
 var p1Stuff = {
@@ -160,7 +168,7 @@ var p1Stuff = {
   totalKilled: 0,
   totalDMGTaken: 0,
   setIdiotMembers: function(suf){
-  	for (var m in this) this[m+"suf"] = this[m];
+  	for (var m in this) this[m+suf] = this[m];
   }
 }
 
@@ -1099,16 +1107,8 @@ var gameVar = {
                 }
 
                 if (keyB.isDown){
-                    gunP2Stuff.currentGunP2 ++;
+                    gunP2Stuff.currentGunP1 ++;
                     gunP2Stuff.gun1P2.loadTexture(gunP2Stuff.switchGuns());
-                    
-                    if (gunP2Stuff.currentGunP2 >= 16 ){
-                        gunP2Stuff.currentGunP2 = 1;
-                        console.log("fds");
-                    } else if ( gunP2Stuff.currentGunP2 <= 0){
-                        gunP2Stuff.currentGunP2 = 16;
-                        console.log("yuyju");
-                    }
                     
                     if (gunP2Stuff.currentGunP2  == 1 ){
                         this.p2GunStuffText.text = "Pistol";
@@ -1130,16 +1130,7 @@ var gameVar = {
                     
                 }
                 if (keyC.isDown){
-                    gunP2Stuff.currentGunP2 --;
-                    
-                    if ( gunP2Stuff.currentGunP2 > 16 ){
-                       gunP2Stuff.currentGunP2 = 1;
-                      console.log("fds");
-                    } else if ( gunP2Stuff.currentGunP2 <= 0){
-                          gunP2Stuff.currentGunP2 = 16;
-                         console.log("yuyju");
-                    }
-                    
+                    gunP2Stuff.currentGunP1 --;
                     gunP2Stuff.gun1P2.loadTexture(gunP2Stuff.switchGuns());
                     
                     if (gunP2Stuff.currentGunP2  == 1 ){
