@@ -417,7 +417,7 @@ var gameVar = {
             
             for (var i = 0; i < 8; i ++){
                 this.wall = game.add.sprite(wallStuff.set(1, (i)), wallStuff.set(2, (i)), "wallIMG");
-                // game.physics.arcade.enable(this.wall);
+                game.physics.arcade.enable(this.wall);
                 this.wall.scale.x = wallStuff.set(3, (i));
                 this.wall.scale.y = wallStuff.set(4, (i));
                 game.physics.p2.enable( this.wall);
