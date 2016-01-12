@@ -417,7 +417,7 @@ var gameVar = {
             
             for (var i = 0; i < 8; i ++){
                 this.wall = game.add.sprite(wallStuff.set(1, (i)), wallStuff.set(2, (i)), "wallIMG");
-                game.physics.arcade.enable(this.wall);
+                // game.physics.arcade.enable(this.wall);
                 this.wall.scale.x = wallStuff.set(3, (i));
                 this.wall.scale.y = wallStuff.set(4, (i));
                 game.physics.p2.enable( this.wall);
@@ -1229,8 +1229,9 @@ var gameVar = {
     //                }
     //            }
                 for (var i = 0; i < wallStuff.wallArray.length; i++){
-                     game.physics.arcade.collide(hi, wallStuff.wallArray[i], null, null, this);
-                     game.physics.arcade.collide(p2, wallStuff.wallArray[i], null, null, this);
+                      wallStuff.wallArray[i].body.static = true;
+                      game.physics.arcade.collide(hi, wallStuff.wallArray[i], null, null, this);
+                      game.physics.arcade.collide(p2, wallStuff.wallArray[i], null, null, this);
                 }
                 
                 
