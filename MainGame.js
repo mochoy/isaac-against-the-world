@@ -626,7 +626,7 @@ var gameVar = {
 //        }
         
         var bloodSpat = game.add.sprite(enemy.body.x,enemy.body.y, "blood");
-        bloodSpat.scale.x = .02;
+        bloodSpat.scale.x = .2;
         bloodSpat.scale.y = .2;
         helper.splatArray.push(bloodSpat);
 
