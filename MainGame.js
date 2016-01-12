@@ -598,7 +598,7 @@ var gameVar = {
             gunP1Stuff.explosionArray.push(gunP1Stuff.explosion);
             
             this.explosionSound.play();
-        } else if (bullet == helper.bulletsP2 && gunP2Stuff.currentGunNumP2 == 4){
+        } else if (bullet == helper.bulletsP2 && gunP2Stuff.currentGunNumP1 == 4){
             gunP2Stuff.explosion = game.add.sprite(enemy.body.x, enemy.body.y, "explosionAnim");
             game.physics.arcade.enable(gunP2Stuff.explosion);
             gunP2Stuff.explosion.scale.x = .25;
