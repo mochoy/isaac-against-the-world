@@ -1013,15 +1013,15 @@ var gameVar = {
                 }
                
                 if (keyV.isDown){
-                  if (gunP2Stuff.currentGunNumP2 == 2 && Math.floor(gunP2Stuff.shotgunBullets) <= 0){
+                  if (gunP2Stuff.currentGunNumP1 == 2 && Math.floor(gunP2Stuff.shotgunBullets) <= 0){
+                    //play empty gun sound
+                    console.log(gunP2Stuff.currentGunNumP1 + " is out of bullets!");
+                  } else if (gunP2Stuff.currentGunNumP1 == 3 && gunP2Stuff.machineGunBullets <= 0){
                     //play empty gun sound
                     console.log(gunP2Stuff.currentGunNumP2 + " is out of bullets!");
-                  } else if (gunP2Stuff.currentGunNumP2 == 3 && gunP2Stuff.machineGunBullets <= 0){
-                    //play empty gun sound
-                    console.log(gunP2Stuff.currentGunNumP2 + " is out of bullets!");
-                  } else if (gunP2Stuff.currentGunNumP2 == 4 && gunP2Stuff.rocketBullets <= 0){
+                  } else if (gunP2Stuff.currentGunNumP1 == 4 && gunP2Stuff.rocketBullets <= 0){
                      //play empty gun sound
-                    console.log(gunP2Stuff.currentGunNumP2 + " is out of bullets!");
+                    console.log(gunP2Stuff.currentGunNumP1 + " is out of bullets!");
                   } else {
                     if (gunP2Stuff.gun1P2.game.time.time > gunP2Stuff.gun1P2.nextFire){
                         for (var w = 0; w < gunP2Stuff.bulletsToSpawn; w++){
@@ -1044,7 +1044,7 @@ var gameVar = {
                             helper.bulletsP2 = game.add.sprite(bulletSpawnX , bulletSpawnY , "bulletIMG");
                             game.physics.arcade.enable(helper.bulletsP2);
                             
-                           if (gunP2Stuff.currentGunNumP2 == 4){
+                           if (gunP2Stuff.currentGunNumP1 == 4){
                               console.log("current gun is rocket");
                               helper.bulletsP2.scale.x = 0.04;
                               helper.bulletsP2.scale.y = 0.08;
@@ -1070,18 +1070,18 @@ var gameVar = {
                                 helper.bulletsP2.angle = 270;
                             }
                             
-                            if (gunP2Stuff.currentGunNumP2 == 1 ){
+                            if (gunP2Stuff.currentGunNumP1 == 1 ){
                               this.p2GunStuffText.text = "Pistol";
                               this.pistolSound.play();
-                            } else if (gunP2Stuff.currentGunNumP2 == 2){
+                            } else if (gunP2Stuff.currentGunNumP1 == 2){
                               this.shotgunSound.play();
                               gunP2Stuff.shotgunBullets -= 0.2;
                               this.p2GunStuffText.text = "Shotgun: " + Math.floor(gunP2Stuff.shotgunBullets);
-                            } else if (gunP2Stuff.currentGunNumP2 == 3){
+                            } else if (gunP2Stuff.currentGunNumP1 == 3){
                               this.machineGunSound.play();
                               gunP2Stuff.machineGunBullets --;
                               this.p2GunStuffText.text = "Machine Gun: " + gunP2Stuff.machineGunBullets;
-                            } else if (gunP2Stuff.currentGunNumP2 == 4){
+                            } else if (gunP2Stuff.currentGunNumP1 == 4){
                               this.rocketLaunchSound.play();
                               gunP2Stuff.rocketBullets --;
                               this.p2GunStuffText.text = "RPG: " + gunP2Stuff.rocketBullets;
@@ -1111,7 +1111,7 @@ var gameVar = {
                             }
                         }
 
-                        gunP2Stuff.gun1P2.nextFire = gunP2Stuff.gun1P2.game.time.time + gunP2Stuff.fireRateP2;
+                        gunP2Stuff.gun1P2.nextFire = gunP2Stuff.gun1P2.game.time.time + gunP2Stuff.fireRateP1;
                     }
                   }
                 }
@@ -1120,19 +1120,19 @@ var gameVar = {
                     gunP2Stuff.currentGunP1 ++;
                     gunP2Stuff.gun1P2.loadTexture(gunP2Stuff.switchGuns());
                     
-                    if (gunP2Stuff.currentGunP2  == 1 ){
+                    if (gunP2Stuff.currentGunP1  == 1 ){
                         this.p2GunStuffText.text = "Pistol";
                         gunP2Stuff.gun1P2.scale.x = 0.3;
                         gunP2Stuff.gun1P2.scale.y = 0.3;
-                    } else if (gunP2Stuff.currentGunNumP2 == 2){
+                    } else if (gunP2Stuff.currentGunNumP1 == 2){
                         this.p2GunStuffText.text = "Shotgun: " + Math.floor(gunP2Stuff.shotgunBullets);
                         gunP2Stuff.gun1P2.scale.x = 0.5;
                         gunP2Stuff.gun1P2.scale.y = 0.5;
-                    } else if (gunP2Stuff.currentGunNumP2 == 3){
+                    } else if (gunP2Stuff.currentGunNumP1 == 3){
                         this.p2GunStuffText.text = "Machine Gun: " + gunP2Stuff.machineGunBullets;
                         gunP2Stuff.gun1P2.scale.x = 0.5;
                         gunP2Stuff.gun1P2.scale.y = 0.5;
-                    } else if (gunP2Stuff.currentGunNumP2 == 4){
+                    } else if (gunP2Stuff.currentGunNumP1 == 4){
                         this.p2GunStuffText.text = "RPG: " + gunP2Stuff.rocketBullets;
                         gunP2Stuff.gun1P2.scale.x = 0.5;
                         gunP2Stuff.gun1P2.scale.y = 0.5;
@@ -1143,19 +1143,19 @@ var gameVar = {
                     gunP2Stuff.currentGunP1 --;
                     gunP2Stuff.gun1P2.loadTexture(gunP2Stuff.switchGuns());
                     
-                    if (gunP2Stuff.currentGunP2  == 1 ){
+                    if (gunP2Stuff.currentGun1  == 1 ){
                         this.p2GunStuffText.text = "Pistol";
                         gunP2Stuff.gun1P2.scale.x = 0.3;
                         gunP2Stuff.gun1P2.scale.y = 0.3;
-                    } else if (gunP2Stuff.currentGunNumP2 == 2){
-                        this.p2GunStuffText.text = "Shotgun: " + gunP2Stuff.shotgunBullets;
+                    } else if (gunP2Stuff.currentGunNumP1 == 2){
+                        this.p2GunStuffText.text = "Shotgun: " + Math.floor(gunP2Stuff.shotgunBullets);
                         gunP2Stuff.gun1P2.scale.x = 0.5;
                         gunP2Stuff.gun1P2.scale.y = 0.5;
-                    } else if (gunP2Stuff.currentGunNumP2 == 3){
+                    } else if (gunP2Stuff.currentGunNumP1 == 3){
                         this.p2GunStuffText.text = "Machine Gun: " + Math.floor(gunP2Stuff.machineGunBullets);
                         gunP2Stuff.gun1P2.scale.x = 0.5;
                         gunP2Stuff.gun1P2.scale.y = 0.5;
-                    } else if (gunP2Stuff.currentGunNumP2 == 4){
+                    } else if (gunP2Stuff.currentGunNumP1 == 4){
                         this.p2GunStuffText.text = "RPG: " + gunP2Stuff.rocketBullets;
                         gunP2Stuff.gun1P2.scale.x = 0.5;
                         gunP2Stuff.gun1P2.scale.y = 0.5;
