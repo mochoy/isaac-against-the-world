@@ -1,4 +1,4 @@
-//MainGame.js 1-11-2016 Monte source version on right-click
+//MainGame.js 1-12-2016 MJChoy fix pseudo-staic walls
 
 //static: http://phaser.io/examples/v2/p2-physics/static-body
 
@@ -12,7 +12,7 @@
 
 document.getElementsByTagName("div")[0].onmousedown= function(){
     var e= window.event;
-    if (e.which === 3 || e.button === 2) alert("v1.112-551")
+    if (e.which === 3 || e.button === 2) alert("v1.113-558")
 }
 
 //-----
@@ -699,6 +699,11 @@ var gameVar = {
         helper.splatArray.push(bloodSpat);
     },
     
+    guyHitWall: function(guy, wall){
+        guy.body.x -= guy.body.velocity.x/10;
+        guy.body.y -= guy.body.velocity.y/10;
+    },
+
     player1HitEnemy: function(player, enemy){
       // enemy.play("enemyTest2P1AtkAnim");
 
@@ -1166,6 +1171,7 @@ var gameVar = {
                     }
                 }
             
+            // this is acutally causing pseudo static effect, not physics.p2
             for (var i = 0; i < wallStuff.wallArray.length; i ++){
                 wallStuff.wallArray[i].x = wallStuff.set(1, (i));
                 wallStuff.wallArray[i].y = wallStuff.set(2, (i));
@@ -1230,8 +1236,8 @@ var gameVar = {
     //            }
                 for (var i = 0; i < wallStuff.wallArray.length; i++){
                       wallStuff.wallArray[i].body.static = true;
-                      game.physics.arcade.collide(hi, wallStuff.wallArray[i], null, null, this);
-                      game.physics.arcade.collide(p2, wallStuff.wallArray[i], null, null, this);
+                      game.physics.arcade.overlap(hi, wallStuff.wallArray[i], this.guyHitWall, null, this);
+                      game.physics.arcade.overlap(p2, wallStuff.wallArray[i], this.guyHitWall, null, this);
                 }
                 
                 
@@ -1252,7 +1258,7 @@ var gameVar = {
                         game.physics.arcade.overlap(gunP2Stuff.explosion, enemyTest2ArrayP1[i], this.explosionHasHitEnemy, null, this);
 
                         for (var t = 0; t < wallStuff.wallArray.length; t++){
-                            game.physics.arcade.collide(enemyTest2ArrayP1[i], wallStuff.wallArray[t], null, null, this);   
+                            game.physics.arcade.overlap(enemyTest2ArrayP1[i], wallStuff.wallArray[t], this.guyHitWall, null, this);   
                         }
 
 
@@ -1282,7 +1288,7 @@ var gameVar = {
                         game.physics.arcade.overlap(gunP2Stuff.explosion, enemyTest2ArrayP2[i], this.explosionHasHitEnemy, null, this);
 
                         for (var t = 0; t < wallStuff.wallArray.length; t++){
-                            game.physics.arcade.collide(enemyTest2ArrayP2[i], wallStuff.wallArray[t], null, null, this);   
+                            game.physics.arcade.overlap(enemyTest2ArrayP2[i], wallStuff.wallArray[t], this.guyHitWall, null, this);   
                         }
 
                     }
