@@ -1092,28 +1092,31 @@ var gameVar = {
                               this.p2GunStuffText.text = "RPG: " + gunP2Stuff.rocketBullets;
                             }
                             
-                            // if (i <= 0) {
-                            //   if ( (hiFacingDirection == 0)||(hiFacingDirection == 1) ){
-                            //     helper.bullets.body.velocity.x = gunP1Stuff.weaponInaccuracy*(Math.random() - 0.5);
-                            //   } else {
-                            //     helper.bullets.body.velocity.y = gunP1Stuff.weaponInaccuracy*(Math.random() - 0.5);
-                            //   }
-                            // }
-                            
-                            // if (w <= 0) {
-                            //   if ( (hiFacingDirection == 0)||(hiFacingDirection == 1) ){
-                            //     helper.bulletsP2.body.velocity.x = gunP2Stuff.weaponInaccuracy*(Math.random() - 0.5);
-                            //   } else {
-                            //     helper.bulletsP2.body.velocity.y = gunP2Stuff.weaponInaccuracy*(Math.random() - 0.5);
-                            //   }
-                            // }
-                            
-                            if ((w > 0) && ((p2FacingDirection == 0)||(p2FacingDirection == 1))) {
-                                helper.bulletsP2.body.velocity.x = gunP2Stuff.weaponInaccuracy*(Math.random()- 0.5);
-
-                            } else if (w > 0) {
-                                helper.bulletsP2.body.velocity.y = gunP2Stuff.weaponInaccuracy*(Math.random()- 0.5);
+                            if (i <= 0) {
+                              if ( (hiFacingDirection == 0)||(hiFacingDirection == 1) ){
+                                helper.bullets.body.velocity.x = gunP1Stuff.weaponInaccuracy*(Math.random() - 0.5);
+                              } else {
+                                helper.bullets.body.velocity.y = gunP1Stuff.weaponInaccuracy*(Math.random() - 0.5);
+                              }
                             }
+                            
+                            if (w <= 0) {
+                              if ( (p2FacingDirection == 0)||(p2FacingDirection == 1) ){
+                                  console.log("dfsafa");
+                                helper.bulletsP2.body.velocity.x = gunP2Stuff.weaponInaccuracy*(Math.random() - 0.5);
+                              }
+                              else if ((p2FacingDirection == 3)||(p2FacingDirection == 2)) {
+                                helper.bulletsP2.body.velocity.y = gunP2Stuff.weaponInaccuracy*(Math.random() - 0.5);
+                              }
+                            }
+                            
+                            // if ((w > 0) && ((p2FacingDirection == 0)||(p2FacingDirection == 1))) {
+                            //     helper.bulletsP2.body.velocity.x = gunP2Stuff.weaponInaccuracy*(Math.random()- 0.5);
+
+                            // } 
+                            // else if ((w > 0) && ((p2FacingDirection == 3)||(p2FacingDirection == 2))) {
+                            //     helper.bulletsP2.body.velocity.x = gunP2Stuff.weaponInaccuracy*(Math.random()- 0.5);
+                            // }
                         }
 
                         gunP2Stuff.gun1P2.nextFire = gunP2Stuff.gun1P2.game.time.time + gunP2Stuff.fireRateP1;
