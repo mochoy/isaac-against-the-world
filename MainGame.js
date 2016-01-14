@@ -57,7 +57,6 @@ var helper = {
    /*helper.splatArray = new Array();
    helper.bulletArrayP1 = new Array();
    helper.bulletArrayP2 = new Array();
-
    helper.bullets = null;
    helper.bulletsP2 = null; */
 }
@@ -384,7 +383,7 @@ var gameVar = {
 
             p2 = game.add.sprite(260, game.world.centerY, "p2Anim");
             game.physics.arcade.enable(p2);
-            game.physics.p2.enable(p2);
+            // game.physics.p2.enable(p2);
             p2.body.collideWorldBounds = true;
             p2.scale.x = .25;
             p2.scale.y = .25;
@@ -420,7 +419,9 @@ var gameVar = {
                 game.physics.arcade.enable(this.wall);
                 this.wall.scale.x = wallStuff.set(3, (i));
                 this.wall.scale.y = wallStuff.set(4, (i));
-                game.physics.p2.enable( this.wall);
+                this.wall.body.immovable = true;
+                this.wall.body.moves = false;
+                // game.physics.p2.enable( this.wall);
                 // this.wall.body.static = true;
                 // this.wall.body.mass = 100000;
                 // this.wall.body.motionState = p2.body.STATIC;
@@ -768,10 +769,8 @@ var gameVar = {
     
 /*    checkOverlap: function(sprite1, sprite2){
         console.log("dsfas");
-
         var spriteA = sprite1.getBounds();
         var spriteB = sprite2.getBounds();
-
         return Phaser.Rectangle.intersects(spriteA, spriteB);
         
     }, */
@@ -1236,8 +1235,8 @@ var gameVar = {
     //            }
                 for (var i = 0; i < wallStuff.wallArray.length; i++){
                       wallStuff.wallArray[i].body.static = true;
-                      game.physics.arcade.overlap(hi, wallStuff.wallArray[i], this.guyHitWall, null, this);
-                      game.physics.arcade.overlap(p2, wallStuff.wallArray[i], this.guyHitWall, null, this);
+                      game.physics.arcade.collide(hi, wallStuff.wallArray[i], null, null, this);
+                      game.physics.arcade.collide(p2, wallStuff.wallArray[i], null, null, this);
                 }
                 
                 
@@ -1258,13 +1257,13 @@ var gameVar = {
                         game.physics.arcade.overlap(gunP2Stuff.explosion, enemyTest2ArrayP1[i], this.explosionHasHitEnemy, null, this);
 
                         for (var t = 0; t < wallStuff.wallArray.length; t++){
-                            game.physics.arcade.overlap(enemyTest2ArrayP1[i], wallStuff.wallArray[t], this.guyHitWall, null, this);   
+                            game.physics.arcade.collide(enemyTest2ArrayP1[i], wallStuff.wallArray[t], null, null, this);   
+                            game.physics.arcade.overlap(enemyTest2ArrayP1[i], wallStuff.wallArray[t], null, null, this);   
                         }
 
 
                         /*                    if (bullets != null && enemyTest2ArrayP1[i] != null){
                             this.checkOverlap(bullets, enemyTest2ArrayP1[i] );
-
                             if(bullets.getBounds().intersects(enemyTest2ArrayP1[i].getBounds())){
                             console.log("michael");
                             }
@@ -1288,7 +1287,8 @@ var gameVar = {
                         game.physics.arcade.overlap(gunP2Stuff.explosion, enemyTest2ArrayP2[i], this.explosionHasHitEnemy, null, this);
 
                         for (var t = 0; t < wallStuff.wallArray.length; t++){
-                            game.physics.arcade.overlap(enemyTest2ArrayP2[i], wallStuff.wallArray[t], this.guyHitWall, null, this);   
+                            game.physics.arcade.collide(enemyTest2ArrayP2[i], wallStuff.wallArray[t], null, null, this);   
+                            game.physics.arcade.overlap(enemyTest2ArrayP2[i], wallStuff.wallArray[t], null, null, this);   
                         }
 
                     }
@@ -1440,7 +1440,6 @@ function killAndRemoveAllFromArray (arrayToKill){
         bullets = game.add.group();
         bullets.enableBody = true;
         bullets.physicsBodyType = Phaser.Physics.ARCADE;
-
         bullets.createMultiple(50, 'bulletsIMG');
         bullets.setAll('checkWorldBounds', true);
         bullets.setAll('outOfBoundsKill', true);
@@ -1453,12 +1452,10 @@ function killAndRemoveAllFromArray (arrayToKill){
             b.checkWorldBounds = true;
         }
            
-
             console.log("Shoot!");
             var charX = hi.x;
             var charY = hi.y;
             console.log("player is at " + charX + ", " + charY);
-
             if (game.time.now > bulletTime){
                 bullet = bullets.getFirstExists(false);
                 if (bullets){
