@@ -1115,7 +1115,7 @@ var gameVar = {
                             }
                         }
 
-                        gunP2Stuff.gun1P2.nextFire = gunP2Stuff.gun1P2.game.time.time + gunP2Stuff.fireRateP1;
+                        gunP2Stuff.gun1P2.nextFire = gunP2Stuff.gun1P2.game.time.time + gunP2Stuff.fireRateP2;
                     }
                   }
                 }
@@ -1237,6 +1237,13 @@ var gameVar = {
                       wallStuff.wallArray[i].body.static = true;
                       game.physics.arcade.collide(hi, wallStuff.wallArray[i], null, null, this);
                       game.physics.arcade.collide(p2, wallStuff.wallArray[i], null, null, this);
+                      
+                      if (helper.bullets != null){
+                         game.physics.arcade.collide(helper.bullets, wallStuff.wallArray[i], null, null, this);
+                      }
+                      if (helper.bulletsP2 != null){
+                         game.physics.arcade.collide(helper.bulletsP2, wallStuff.wallArray[i], null, null, this);
+                      }
                 }
                 
                 
