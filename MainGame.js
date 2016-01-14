@@ -400,7 +400,8 @@ var gameVar = {
             p2.addChild(gunP2Stuff.gun1P2);
             gunP2Stuff.gun1P2.nextFire = 0;
             gunP2Stuff.gun1P2.fireRate = 300;
-            gunP2Stuff.gun1P2.fireRateP2 = 300;
+            gunP2Stuff.fireRateP1 = 300;
+            gunP2Stuff.gun1P2.fireRateP1 = 300;
             gunP2Stuff.fireRateP2 = 300;
             gunP2Stuff.weaponInaccuracy = 100;
             gunP2Stuff.currentGunP2  = 1;
@@ -1115,7 +1116,7 @@ var gameVar = {
                             }
                         }
 
-                        gunP2Stuff.gun1P2.nextFire = gunP2Stuff.gun1P2.game.time.time + gunP2Stuff.fireRateP2;
+                        gunP2Stuff.gun1P2.nextFire = gunP2Stuff.gun1P2.game.time.time + gunP2Stuff.fireRateP1;
                     }
                   }
                 }
@@ -1128,6 +1129,7 @@ var gameVar = {
                         this.p2GunStuffText.text = "Pistol";
                         gunP2Stuff.gun1P2.scale.x = 0.3;
                         gunP2Stuff.gun1P2.scale.y = 0.3;
+                        // gunP2Stuff.fireRateP2 = 300;
                     } else if (gunP2Stuff.currentGunNumP1 == 2){
                         this.p2GunStuffText.text = "Shotgun: " + Math.floor(gunP2Stuff.shotgunBullets);
                         gunP2Stuff.gun1P2.scale.x = 0.5;
@@ -1238,12 +1240,20 @@ var gameVar = {
                       game.physics.arcade.collide(hi, wallStuff.wallArray[i], null, null, this);
                       game.physics.arcade.collide(p2, wallStuff.wallArray[i], null, null, this);
                       
-                      if (helper.bullets != null){
-                         game.physics.arcade.collide(helper.bullets, wallStuff.wallArray[i], null, null, this);
-                      }
-                      if (helper.bulletsP2 != null){
-                         game.physics.arcade.collide(helper.bulletsP2, wallStuff.wallArray[i], null, null, this);
-                      }
+                    //   if (helper.bullets != null){
+                    //      game.physics.arcade.overlap(helper.bullets, wallStuff.wallArray[i], function killBullet(){
+                    //          console.log("bullet hit wall");
+                    //         //  helper.bullets.kill();
+                    //          helper.bulletArrayP1.pop();
+                    //      }, null, this);
+                    //   }
+                    //   if (helper.bulletsP2 != null){
+                    //      game.physics.arcade.overlap(helper.bulletsP2, wallStuff.wallArray[i], function killBullet(){
+                    //         console.log("bullet hit wall");
+                    //         helper.bulletsP2.kill();
+                    //         helper.bulletArrayP2.pop();
+                    //      }, null, this);
+                    //   }
                 }
                 
                 
@@ -1409,6 +1419,10 @@ function killAndRemoveAllFromArray (arrayToKill){
    while(arrayToKill.length > 0){
       arrayToKill.pop().kill();
    }
+}
+
+function killBullet (bullet, array){
+    bullet.kill();
 }
 
 
