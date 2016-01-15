@@ -406,6 +406,7 @@ var gameVar = {
             gunP2Stuff.weaponInaccuracy = 100;
             gunP2Stuff.currentGunP2  = 1;
             gunP2Stuff.currentGunNumP2 = 1;
+            gunP2Stuff.currentGunNumP1 = 1;
             
             p2FacingDirection = 0;
             
