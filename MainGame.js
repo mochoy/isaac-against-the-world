@@ -816,7 +816,20 @@ var gameVar = {
 
                 //controls
                 if (keyK.isDown){
-                    if (gunP1Stuff.gun1P1.game.time.time > gunP1Stuff.gun1P1.nextFire){
+                    if (gunP1Stuff.currentGunNumP1 == 2 && Math.floor(gunP1Stuff.shotgunBullets) <= 0){
+                        //play empty gun sound
+                        this.dryFireGunSound.play();
+                        console.log(gunP1Stuff.currentGunNumP1 + " is out of bullets!");
+                      } else if (gunP1Stuff.currentGunNumP1 == 3 && gunP1Stuff.machineGunBullets <= 0){
+                          this.dryFireGunSound.play();
+                        //play empty gun sound
+                        console.log(gunP1Stuff.currentGunNumP2 + " is out of bullets!");
+                      } else if (gunP1Stuff.currentGunNumP1 == 4 && gunP1Stuff.rocketBullets <= 0){
+                         //play empty gun sound
+                         this.dryFireGunSound.play();
+                        console.log(gunP1Stuff.currentGunNumP1 + " is out of bullets!");
+                      } else  {
+                        if (gunP1Stuff.gun1P1.game.time.time > gunP1Stuff.gun1P1.nextFire){
                         for (var i = 0; i < gunP1Stuff.bulletsToSpawn; i++){
                             var bulletSpawnX, bulletSpawnY;
                             
@@ -910,8 +923,8 @@ var gameVar = {
                             bullets.kill();
                         }, 500); */
                         gunP1Stuff.gun1P1.nextFire = gunP1Stuff.gun1P1.game.time.time + gunP1Stuff.fireRateP1;
+                        }
                     }
-
                 }
 
                 if (cursors.left.isDown){
@@ -1026,12 +1039,15 @@ var gameVar = {
                 if (keyV.isDown){
                   if (gunP2Stuff.currentGunNumP1 == 2 && Math.floor(gunP2Stuff.shotgunBullets) <= 0){
                     //play empty gun sound
+                    this.dryFireGunSound.play();
                     console.log(gunP2Stuff.currentGunNumP1 + " is out of bullets!");
                   } else if (gunP2Stuff.currentGunNumP1 == 3 && gunP2Stuff.machineGunBullets <= 0){
+                      this.dryFireGunSound.play();
                     //play empty gun sound
                     console.log(gunP2Stuff.currentGunNumP2 + " is out of bullets!");
                   } else if (gunP2Stuff.currentGunNumP1 == 4 && gunP2Stuff.rocketBullets <= 0){
                      //play empty gun sound
+                     this.dryFireGunSound.play();
                     console.log(gunP2Stuff.currentGunNumP1 + " is out of bullets!");
                   } else {
                     if (gunP2Stuff.gun1P2.game.time.time > gunP2Stuff.gun1P2.nextFire){
