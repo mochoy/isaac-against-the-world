@@ -289,7 +289,8 @@ var gameVar = {
         game.load.audio('zombieSound', 'Assets/Audio/zombieSound.mp3');
         game.load.audio('machineGunSound', 'Assets/Audio/machineGunSound.mp3');
         game.load.audio('rocketLaunchSound', 'Assets/Audio/rocketLaunchSound.mp3');
-        game.load.audio("dryFireGunSound", "Assets/Audio/dryFireGun.mp3")
+        game.load.audio("dryFireGunSound", "Assets/Audio/dryFireGun.mp3");
+        game.load.audio("footStepsSound", "Assets/Audio/footStepsSound.mp3");
 
     },
 
