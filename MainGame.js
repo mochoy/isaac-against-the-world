@@ -216,6 +216,7 @@ var gameVar = {
     deadScreen: null,
     startButton: null,
     retryButton: null,
+    
     explosionSound: null,
     pistolSound: null,
     shotgunSound: null,
@@ -223,6 +224,8 @@ var gameVar = {
     zombieSoun: null,
     machineGunSound: null,
     rocketLaunchSound: null,
+    dryFireGunSound: null,
+    
     p1GunStuffText: null,
     p2GunStuffText: null,
     enemySpawnLimit: 50,
@@ -286,6 +289,7 @@ var gameVar = {
         game.load.audio('zombieSound', 'Assets/Audio/zombieSound.mp3');
         game.load.audio('machineGunSound', 'Assets/Audio/machineGunSound.mp3');
         game.load.audio('rocketLaunchSound', 'Assets/Audio/rocketLaunchSound.mp3');
+        game.load.audio("dryFireGunSound", "Assets/Audio/dryFireGun.mp3")
 
     },
 
@@ -308,6 +312,7 @@ var gameVar = {
         this.zombieSound = game.add.audio('zombieSound');
         this.machineGunSound = game.add.audio('machineGunSound');
         this.rocketLaunchSound = game.add.audio('rocketLaunchSound');
+        this.dryFireGunSound = game.add.audio("dryFireGunSound");
         
     	game.physics.startSystem(Phaser.Physics.P2JS);
         
