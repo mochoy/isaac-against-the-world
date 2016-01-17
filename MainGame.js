@@ -54,6 +54,12 @@ var helper = {
     bullets: null,
     bulletsP2: null
     
+    ,deleteMarkedElements : function( at, mark ){
+        
+        
+        return at;
+    }
+    
    /*helper.splatArray = new Array();
    helper.bulletArrayP1 = new Array();
    helper.bulletArrayP2 = new Array();
@@ -598,6 +604,8 @@ var gameVar = {
         }*/
 
         console.log("hit");
+        
+        enemy.isToDel = true;
         
         if (bullet == helper.bullets && gunP1Stuff.currentGunNumP1 == 4){
             gunP1Stuff.explosion = game.add.sprite(enemy.body.x, enemy.body.y, "explosionAnim");
@@ -1293,42 +1301,43 @@ var gameVar = {
                 }
                 
                 
-                for (var i = enemyTest2ArrayP1.length; i > 0 ; i--){
-                    var checker = i -= 1;
-                    
+                for (var i = enemyTest2ArrayP1.length - 1; i >= 0 ; i--){
                     if (!enemyTest2ArrayP1[i].isDead){
                         // console.log("Checker is " + checker);
                         // console.log("I is " + i);
                         
-                        enemyTest2ArrayP1[checker].bringToTop();
-                        enemyTest.game.physics.arcade.moveToObject(enemyTest2ArrayP1[checker], hi, 50);
-                        game.physics.arcade.collide(hi, enemyTest2ArrayP1[checker], this.player1HitEnemy, null, this);
-                        game.physics.arcade.collide(p2, enemyTest2ArrayP1[checker], this.player1HitEnemy, null, this);
+                        enemyTest2ArrayP1[i].bringToTop();
+                        enemyTest.game.physics.arcade.moveToObject(enemyTest2ArrayP1[i], hi, 50);
+                        game.physics.arcade.collide(hi, enemyTest2ArrayP1[i], this.player1HitEnemy, null, this);
+                        game.physics.arcade.collide(p2, enemyTest2ArrayP1[i], this.player1HitEnemy, null, this);
 
-                        game.physics.arcade.collide(helper.bulletsP2, enemyTest2ArrayP1[checker], this.bulletHasHitEnemyP1, null, this);
-                        game.physics.arcade.collide(helper.bullets, enemyTest2ArrayP1[checker], this.bulletHasHitEnemyP1, null, this);
+                        game.physics.arcade.collide(helper.bulletsP2, enemyTest2ArrayP1[i], this.bulletHasHitEnemyP1, null, this);
+                        game.physics.arcade.collide(helper.bullets, enemyTest2ArrayP1[i], this.bulletHasHitEnemyP1, null, this);
+                        
+                        game.physics.arcade.overlap(helper.bulletsP2, enemyTest2ArrayP1[i], this.bulletHasHitEnemyP1, null, this);
+                        game.physics.arcade.overlap(helper.bullets, enemyTest2ArrayP1[i], this.bulletHasHitEnemyP1, null, this);
 
-                        game.physics.arcade.overlap(helper.bulletsP2, enemyTest2ArrayP1[checker], this.bulletHasHitEnemyP1, null, this);
-                        game.physics.arcade.overlap(helper.bullets, enemyTest2ArrayP1[checker], this.bulletHasHitEnemyP1, null, this);
-
-                        game.physics.arcade.overlap(gunP1Stuff.explosion, enemyTest2ArrayP1[checker], this.explosionHasHitEnemy, null, this);
-                        game.physics.arcade.overlap(gunP2Stuff.explosion, enemyTest2ArrayP1[checker], this.explosionHasHitEnemy, null, this);
+                        game.physics.arcade.overlap(gunP1Stuff.explosion, enemyTest2ArrayP1[i], this.explosionHasHitEnemy, null, this);
+                        game.physics.arcade.overlap(gunP2Stuff.explosion, enemyTest2ArrayP1[i], this.explosionHasHitEnemy, null, this);
 
                         for (var t = 0; t < wallStuff.wallArray.length; t++){
-                            game.physics.arcade.collide(enemyTest2ArrayP1[checker], wallStuff.wallArray[t], null, null, this);   
-                            game.physics.arcade.overlap(enemyTest2ArrayP1[checker], wallStuff.wallArray[t], null, null, this);   
+                            game.physics.arcade.collide(enemyTest2ArrayP1[i], wallStuff.wallArray[t], null, null, this);   
+                            game.physics.arcade.overlap(enemyTest2ArrayP1[i], wallStuff.wallArray[t], null, null, this);   
                         }
+                        
 
-
-                        /*                    if (bullets != null && enemyTest2ArrayP1[i] != null){
+/*                    if (bullets != null && enemyTest2ArrayP1[i] != null){
                             this.checkOverlap(bullets, enemyTest2ArrayP1[i] );
                             if(bullets.getBounds().intersects(enemyTest2ArrayP1[i].getBounds())){
                             console.log("michael");
                             }
                         } */
-                    }
-                }
-                for (var i = enemyTest2ArrayP2.length; i > 0; i--){
+                    } //if
+                } //for
+                
+                enemyTest2ArrayP1 = helper.deleteMarkedElements( enemyTest2ArrayP1, "isToDel" );
+                
+                for (var i = enemyTest2ArrayP2.length; i >= 0; i--){
                     var checker = i -= 1;
                     if (!enemyTest2ArrayP2[checker].isDead){
                         enemyTest2ArrayP2[checker].bringToTop();
