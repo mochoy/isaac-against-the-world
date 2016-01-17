@@ -229,6 +229,7 @@ var gameVar = {
     deadScreen: null,
     startButton: null,
     retryButton: null,
+    backGround: null,
     
     explosionSound: null,
     pistolSound: null,
@@ -248,6 +249,8 @@ var gameVar = {
     wall: null,
     
     preload: function () {
+        game.load.image("backGroundIMG", "Assets/lightSand.png");
+        
         game.load.image("testIMG", 'Assets/ducksOnRollerCoasters.jpeg');
         game.load.image("zombieIMG", "Assets/mikeWazowskiWithTwoEyes.jpeg");
         game.load.image("bulletsIMG", "Assets/peanuts.jpeg");
@@ -365,6 +368,8 @@ var gameVar = {
 
         else if (this.gameState == 1){
             console.log("drawing game phase 1");
+            
+            this.backGround = game.add.sprite(0, 0, "backGroundIMG");
             
             hi = game.add.sprite(game.world.centerX*4/3, game.world.centerY, "p1Anim");
             game.physics.arcade.enable(hi);
@@ -529,6 +534,8 @@ var gameVar = {
             
             p2Stuff.healthBarRed.kill();
             p2Stuff.healthBarGreen.kill();
+            
+            this.backGround.kill();
 
             console.log("player 1");
             this.retryButton = game.add.button(game.world.centerX - 200, 400, 'retryButton', startGame, this, 3, 2, 1, 0);
