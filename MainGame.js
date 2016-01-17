@@ -369,7 +369,11 @@ var gameVar = {
         else if (this.gameState == 1){
             console.log("drawing game phase 1");
             
-            this.backGround = game.add.sprite(0, 0, "backGroundIMG");
+            // this.backGround = game.add.sprite(0, 0, "backGroundIMG");
+            // this.backGround.scale.x = 10;
+            // this.backGround.scale.y = 10;
+            
+            this.backGround = game.add.tileSprite(0, 0, game.world.width, game.world.height, "backGroundIMG");
             
             hi = game.add.sprite(game.world.centerX*4/3, game.world.centerY, "p1Anim");
             game.physics.arcade.enable(hi);
