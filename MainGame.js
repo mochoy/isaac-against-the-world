@@ -1328,25 +1328,26 @@ var gameVar = {
                         } */
                     }
                 }
-                for (var i = 0; i < enemyTest2ArrayP2.length; i++){
-                    if (!enemyTest2ArrayP2[i].isDead){
-                        enemyTest2ArrayP2[i].bringToTop();
-                        enemyTest.game.physics.arcade.moveToObject(enemyTest2ArrayP2[i], p2, 50);
-                        game.physics.arcade.collide(hi, enemyTest2ArrayP2[i], this.player1HitEnemy, null, this);
-                        game.physics.arcade.collide(p2, enemyTest2ArrayP2[i], this.player1HitEnemy, null, this);
+                for (var i = enemyTest2ArrayP2.length; i > 0; i--){
+                    var checker = i -= 1;
+                    if (!enemyTest2ArrayP2[checker].isDead){
+                        enemyTest2ArrayP2[checker].bringToTop();
+                        enemyTest.game.physics.arcade.moveToObject(enemyTest2ArrayP2[checker], p2, 50);
+                        game.physics.arcade.collide(hi, enemyTest2ArrayP2[checker], this.player1HitEnemy, null, this);
+                        game.physics.arcade.collide(p2, enemyTest2ArrayP2[checker], this.player1HitEnemy, null, this);
 
-                        game.physics.arcade.collide(helper.bulletsP2, enemyTest2ArrayP2[i], this.bulletHasHitEnemyP1, null, this);
-                        game.physics.arcade.collide(helper.bullets, enemyTest2ArrayP2[i], this.bulletHasHitEnemyP1, null, this);
+                        game.physics.arcade.collide(helper.bulletsP2, enemyTest2ArrayP2[checker], this.bulletHasHitEnemyP1, null, this);
+                        game.physics.arcade.collide(helper.bullets, enemyTest2ArrayP2[checker], this.bulletHasHitEnemyP1, null, this);
 
-                        game.physics.arcade.overlap(helper.bulletsP2, enemyTest2ArrayP2[i], this.bulletHasHitEnemyP1, null, this);
-                        game.physics.arcade.overlap(helper.bullets, enemyTest2ArrayP2[i], this.bulletHasHitEnemyP1, null, this);
+                        game.physics.arcade.overlap(helper.bulletsP2, enemyTest2ArrayP2[checker], this.bulletHasHitEnemyP1, null, this);
+                        game.physics.arcade.overlap(helper.bullets, enemyTest2ArrayP2[checker], this.bulletHasHitEnemyP1, null, this);
 
-                        game.physics.arcade.overlap(gunP1Stuff.explosion, enemyTest2ArrayP2[i], this.explosionHasHitEnemy, null, this);
-                        game.physics.arcade.overlap(gunP2Stuff.explosion, enemyTest2ArrayP2[i], this.explosionHasHitEnemy, null, this);
+                        game.physics.arcade.overlap(gunP1Stuff.explosion, enemyTest2ArrayP2[checker], this.explosionHasHitEnemy, null, this);
+                        game.physics.arcade.overlap(gunP2Stuff.explosion, enemyTest2ArrayP2[checker], this.explosionHasHitEnemy, null, this);
 
                         for (var t = 0; t < wallStuff.wallArray.length; t++){
-                            game.physics.arcade.collide(enemyTest2ArrayP2[i], wallStuff.wallArray[t], null, null, this);   
-                            game.physics.arcade.overlap(enemyTest2ArrayP2[i], wallStuff.wallArray[t], null, null, this);   
+                            game.physics.arcade.collide(enemyTest2ArrayP2[checker], wallStuff.wallArray[t], null, null, this);   
+                            game.physics.arcade.overlap(enemyTest2ArrayP2[checker], wallStuff.wallArray[t], null, null, this);   
                         }
 
                     }
