@@ -547,7 +547,7 @@ var gameVar = {
                     enemyTest2P1 = game.add.sprite(game.world.randomX + game.width, game.world.randomY + game.height, "zombieAnim");
                     enemyTest2P1.scale.x = .2;
                     enemyTest2P1.scale.y = .2;
-                    enemyTest2P1.anchor.setTo(.5);
+                    enemyTest2P1.anchor.setTo(.5, 0.5);
                     game.physics.arcade.enable(enemyTest2P1);
     
                     enemyTest2P1.isDead = false;
@@ -564,7 +564,7 @@ var gameVar = {
                     enemyTest2P2 = game.add.sprite(game.world.randomX - game.width, game.world.randomY - game.height, "zombieAnim");
                     enemyTest2P2.scale.x = .2;
                     enemyTest2P2.scale.y = .2;
-                    enemyTest2P2.anchor.setTo(.5);
+                    enemyTest2P2.anchor.setTo(.5, 0.5);
                     game.physics.arcade.enable(enemyTest2P2);
     
                     enemyTest2P2.isDead = false;
@@ -720,7 +720,6 @@ var gameVar = {
             scoreTXTP2.text = "Score: " + scoreP2;
             p2Stuff.totalKilledP2 ++;
         }
-        console.log("enemy kill");
         enemy.kill();
         
         var bloodSpat = game.add.sprite(enemy.body.x,enemy.body.y, "blood");
@@ -748,7 +747,7 @@ var gameVar = {
         
         enemy.events.onAnimationComplete.add( new OOCallback(fl,"clear").fcn, this );
         enemy.events.onAnimationComplete.add(function(){
-  			  console.log("complete");
+  		// 	  console.log("complete");
   			  if (player == hi){
               healthP1 -= 5;
               p1Stuff.totalDMGTakenP1 += 5;
@@ -1312,9 +1311,13 @@ var gameVar = {
                     if (!enemyTest2ArrayP1[i].isDead){
                         // console.log("Checker is " + checker);
                         // console.log("I is " + i);
-                        
                         enemyTest2ArrayP1[i].bringToTop();
+                        
+                        var angleToRotate = (game.physics.arcade.angleBetween(enemyTest2ArrayP1[i], hi) + 90);
+                        enemyTest2ArrayP1[i].rotation = angleToRotate;
+                        // game.physics.arcade.velocityFromAngle(angleToRotate, 50, hi);
                         enemyTest.game.physics.arcade.moveToObject(enemyTest2ArrayP1[i], hi, 50);
+                        
                         game.physics.arcade.collide(hi, enemyTest2ArrayP1[i], this.player1HitEnemy, null, this);
                         game.physics.arcade.collide(p2, enemyTest2ArrayP1[i], this.player1HitEnemy, null, this);
 
