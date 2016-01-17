@@ -520,7 +520,7 @@ var gameVar = {
             console.log("player 1");
             this.retryButton = game.add.button(game.world.centerX - 200, 400, 'retryButton', startGame, this, 3, 2, 1, 0);
             
-            this.enemySpawnLimit = 50;
+            this.enemySpawnLimit = 75;
             
 
         }
@@ -705,6 +705,7 @@ var gameVar = {
             scoreTXTP2.text = "Score: " + scoreP2;
             p2Stuff.totalKilledP2 ++;
         }
+        console.log("enemy kill");
         enemy.kill();
         
         var bloodSpat = game.add.sprite(enemy.body.x,enemy.body.y, "blood");
@@ -1232,20 +1233,24 @@ var gameVar = {
                 for (var i=0; (i < 20) && (helper.splatArray.length > 100); i++) {
                     helper.splatArray.shift().kill();
                 }
+                
                 for (var i=0; (i < 20) && (helper.bulletArrayP1.length > 50); i++) {
                     helper.bulletArrayP1.shift().kill();
                 }
+                
                 for (var i=0; (i < 20) && (helper.bulletArrayP2.length > 50); i++) {
                     helper.bulletArrayP2.shift().kill();
                 }
-                if (enemyTest2ArrayP1.length > this.enemySpawnLimit){
-                    var enemy9 = enemyTest2ArrayP1.shift();
-                    enemy9.kill();
-                }
-                if (enemyTest2ArrayP2.length > this.enemySpawnLimit){
-                    var enemy10 = enemyTest2ArrayP2.shift();
-                    enemy10.kill();
-                }
+                
+                // if (enemyTest2ArrayP1.length > this.enemySpawnLimit){
+                //     var enemy9 = enemyTest2ArrayP1.shift();
+                //     enemy9.kill();
+                // }
+                
+                // if (enemyTest2ArrayP2.length > this.enemySpawnLimit){
+                //     var enemy10 = enemyTest2ArrayP2.shift();
+                //     enemy10.kill();
+                // }
 
                 if (gunP1Stuff.explosionArray.length > 3){
                     var toKill = gunP1Stuff.explosionArray.shift();
@@ -1288,25 +1293,30 @@ var gameVar = {
                 }
                 
                 
-                for (var i = 0; i < enemyTest2ArrayP1.length; i++){
+                for (var i = enemyTest2ArrayP1.length; i > 0 ; i--){
+                    var checker = i -= 1;
+                    
                     if (!enemyTest2ArrayP1[i].isDead){
-                        enemyTest2ArrayP1[i].bringToTop();
-                        enemyTest.game.physics.arcade.moveToObject(enemyTest2ArrayP1[i], hi, 50);
-                        game.physics.arcade.collide(hi, enemyTest2ArrayP1[i], this.player1HitEnemy, null, this);
-                        game.physics.arcade.collide(p2, enemyTest2ArrayP1[i], this.player1HitEnemy, null, this);
+                        // console.log("Checker is " + checker);
+                        // console.log("I is " + i);
+                        
+                        enemyTest2ArrayP1[checker].bringToTop();
+                        enemyTest.game.physics.arcade.moveToObject(enemyTest2ArrayP1[checker], hi, 50);
+                        game.physics.arcade.collide(hi, enemyTest2ArrayP1[checker], this.player1HitEnemy, null, this);
+                        game.physics.arcade.collide(p2, enemyTest2ArrayP1[checker], this.player1HitEnemy, null, this);
 
-                        game.physics.arcade.collide(helper.bulletsP2, enemyTest2ArrayP1[i], this.bulletHasHitEnemyP1, null, this);
-                        game.physics.arcade.collide(helper.bullets, enemyTest2ArrayP1[i], this.bulletHasHitEnemyP1, null, this);
+                        game.physics.arcade.collide(helper.bulletsP2, enemyTest2ArrayP1[checker], this.bulletHasHitEnemyP1, null, this);
+                        game.physics.arcade.collide(helper.bullets, enemyTest2ArrayP1[checker], this.bulletHasHitEnemyP1, null, this);
 
-                        game.physics.arcade.overlap(helper.bulletsP2, enemyTest2ArrayP1[i], this.bulletHasHitEnemyP1, null, this);
-                        game.physics.arcade.overlap(helper.bullets, enemyTest2ArrayP1[i], this.bulletHasHitEnemyP1, null, this);
+                        game.physics.arcade.overlap(helper.bulletsP2, enemyTest2ArrayP1[checker], this.bulletHasHitEnemyP1, null, this);
+                        game.physics.arcade.overlap(helper.bullets, enemyTest2ArrayP1[checker], this.bulletHasHitEnemyP1, null, this);
 
-                        game.physics.arcade.overlap(gunP1Stuff.explosion, enemyTest2ArrayP1[i], this.explosionHasHitEnemy, null, this);
-                        game.physics.arcade.overlap(gunP2Stuff.explosion, enemyTest2ArrayP1[i], this.explosionHasHitEnemy, null, this);
+                        game.physics.arcade.overlap(gunP1Stuff.explosion, enemyTest2ArrayP1[checker], this.explosionHasHitEnemy, null, this);
+                        game.physics.arcade.overlap(gunP2Stuff.explosion, enemyTest2ArrayP1[checker], this.explosionHasHitEnemy, null, this);
 
                         for (var t = 0; t < wallStuff.wallArray.length; t++){
-                            game.physics.arcade.collide(enemyTest2ArrayP1[i], wallStuff.wallArray[t], null, null, this);   
-                            game.physics.arcade.overlap(enemyTest2ArrayP1[i], wallStuff.wallArray[t], null, null, this);   
+                            game.physics.arcade.collide(enemyTest2ArrayP1[checker], wallStuff.wallArray[t], null, null, this);   
+                            game.physics.arcade.overlap(enemyTest2ArrayP1[checker], wallStuff.wallArray[t], null, null, this);   
                         }
 
 
