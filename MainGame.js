@@ -52,12 +52,17 @@ var helper = {
     bulletArrayP2: new Array(),
     
     bullets: null,
-    bulletsP2: null
+    bulletsP2: null,
     
-    ,deleteMarkedElements : function( at, mark ){
+    deleteMarkedElements : function( at, mark ){
+        var arrayToAdd = new Array();
+        for (var i = 0; i < at.length; i ++){
+            if (at[i][mark]){ 
+                console.log("enemy is marked");
+            }
+        }
         
-        
-        return at;
+        // return arrayToAdd;
     }
     
    /*helper.splatArray = new Array();
@@ -606,7 +611,7 @@ var gameVar = {
         console.log("hit");
         
         enemy.isToDel = true;
-        
+
         if (bullet == helper.bullets && gunP1Stuff.currentGunNumP1 == 4){
             gunP1Stuff.explosion = game.add.sprite(enemy.body.x, enemy.body.y, "explosionAnim");
             game.physics.arcade.enable(gunP1Stuff.explosion);
