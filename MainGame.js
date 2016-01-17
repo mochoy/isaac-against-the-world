@@ -59,7 +59,8 @@ var helper = {
         for (var i = 0; i < at.length; i ++){
             if (!at[i][mark]){ 
                 arrayToAdd.push(at[i]);
-                
+            } else {
+                console.log("enemy removed");
             }
         }
         
@@ -1363,9 +1364,11 @@ var gameVar = {
                             game.physics.arcade.collide(enemyTest2ArrayP2[i], wallStuff.wallArray[t], null, null, this);   
                             game.physics.arcade.overlap(enemyTest2ArrayP2[i], wallStuff.wallArray[t], null, null, this);   
                         }
-
                     }
-                }
+                } //for 
+                
+                enemyTest2ArrayP2 = helper.deleteMarkedElements( enemyTest2ArrayP2, "isToDel" );
+
                 
                 if (healthP1 <= 0){
                     console.log("player 1 is dead");
