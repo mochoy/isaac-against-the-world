@@ -240,6 +240,7 @@ var gameVar = {
     rocketLaunchSound: null,
     dryFireGunSound: null,
     footStepsSound: null,
+    weaponSwitchSound: null,
     
     p1GunStuffText: null,
     p2GunStuffText: null,
@@ -307,7 +308,8 @@ var gameVar = {
         game.load.audio('machineGunSound', 'Assets/Audio/machineGunSound.mp3');
         game.load.audio('rocketLaunchSound', 'Assets/Audio/rocketLaunchSound.mp3');
         game.load.audio("dryFireGunSound", "Assets/Audio/dryFireGun.mp3");
-        game.load.audio("footStepsSound", "Assets/Audio/footStepsSound.mp3");
+        game.load.audio("footStepsSound", "Assets/Audio/footStepsSound2.mp3");
+        game.load.audio("gunClickSound", "Assets/Audio/gunClickSound.mp3");
 
     },
 
@@ -325,13 +327,13 @@ var gameVar = {
         this.explosionSound  = game.add.audio('explosionSound');
         this.pistolSound = game.add.audio('pistolSound');
         this.shotgunSound = game.add.audio('shotgunSound');
-        
         this.walkingSound = game.add.audio('walkingSound');
         this.zombieSound = game.add.audio('zombieSound');
         this.machineGunSound = game.add.audio('machineGunSound');
         this.rocketLaunchSound = game.add.audio('rocketLaunchSound');
         this.dryFireGunSound = game.add.audio("dryFireGunSound");
         this.footStepsSound = game.add.audio("footStepsSound");
+        this.weaponSwitchSound = game.add.audio("gunClickSound");
         
     	game.physics.startSystem(Phaser.Physics.P2JS);
         
@@ -1037,6 +1039,7 @@ var gameVar = {
                 }
 
                 if (keyW.isDown){
+                    this.zombieSound.play();
                     p2.body.velocity.y = - 300;
                     p2FacingDirection = 0;
                     console.log("player 2 moved up");
@@ -1179,6 +1182,7 @@ var gameVar = {
                 }
 
                 if (keyB.isDown){
+                    this.weaponSwitchSound.play();
                     gunP2Stuff.currentGunP1 ++;
                     gunP2Stuff.gun1P2.loadTexture(gunP2Stuff.switchGuns());
                     
