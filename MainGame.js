@@ -57,12 +57,13 @@ var helper = {
     deleteMarkedElements : function( at, mark ){
         var arrayToAdd = new Array();
         for (var i = 0; i < at.length; i ++){
-            if (at[i][mark]){ 
-                console.log("enemy is marked");
+            if (!at[i][mark]){ 
+                arrayToAdd.push(at[i]);
+                
             }
         }
         
-        // return arrayToAdd;
+        return arrayToAdd;
     }
     
    /*helper.splatArray = new Array();
