@@ -1350,7 +1350,11 @@ var gameVar = {
                 for (var i = enemyTest2ArrayP2.length - 1; i >= 0; i--){
                     if (!enemyTest2ArrayP2[i].isDead){
                         enemyTest2ArrayP2[i].bringToTop();
+                        
+                        var angleToRotate = (game.physics.arcade.angleBetween(enemyTest2ArrayP2[i], p2) + 90);
+                        enemyTest2ArrayP2[i].rotation = angleToRotate;
                         enemyTest.game.physics.arcade.moveToObject(enemyTest2ArrayP2[i], p2, 50);
+                        
                         game.physics.arcade.collide(hi, enemyTest2ArrayP2[i], this.player1HitEnemy, null, this);
                         game.physics.arcade.collide(p2, enemyTest2ArrayP2[i], this.player1HitEnemy, null, this);
 
