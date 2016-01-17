@@ -240,7 +240,9 @@ var gameVar = {
     rocketLaunchSound: null,
     dryFireGunSound: null,
     footStepsSound: null,
-    weaponSwitchSound: null,
+    weaponSwitchSoundP1: null,
+    weaponSwitchSoundP2: null,
+
     
     p1GunStuffText: null,
     p2GunStuffText: null,
@@ -333,7 +335,9 @@ var gameVar = {
         this.rocketLaunchSound = game.add.audio('rocketLaunchSound');
         this.dryFireGunSound = game.add.audio("dryFireGunSound");
         this.footStepsSound = game.add.audio("footStepsSound");
-        this.weaponSwitchSound = game.add.audio("gunClickSound");
+        this.weaponSwitchSoundP1 = game.add.audio("gunClickSound");
+        this.weaponSwitchSoundP2 = game.add.audio("gunClickSound");
+
         
     	game.physics.startSystem(Phaser.Physics.P2JS);
         
@@ -990,6 +994,7 @@ var gameVar = {
                 }
 
                 if (keyL.isDown){
+                    this.weaponSwitchSoundP1.play();
                     gunP1Stuff.currentGunP1 ++;
                     gunP1Stuff.gun1P1.loadTexture(gunP1Stuff.switchGuns());
                     
@@ -1012,6 +1017,7 @@ var gameVar = {
                     }
                 }
                 if (keyJ.isDown){
+                    this.weaponSwitchSoundP1.play();
                     gunP1Stuff.currentGunP1 --;
                     gunP1Stuff.gun1P1.loadTexture(gunP1Stuff.switchGuns());
                     
@@ -1182,7 +1188,7 @@ var gameVar = {
                 }
 
                 if (keyB.isDown){
-                    this.weaponSwitchSound.play();
+                    this.weaponSwitchSoundP2.play();
                     gunP2Stuff.currentGunP1 ++;
                     gunP2Stuff.gun1P2.loadTexture(gunP2Stuff.switchGuns());
                     
@@ -1206,7 +1212,9 @@ var gameVar = {
                     }
                     
                 }
+                
                 if (keyC.isDown){
+                    this.weaponSwitchSoundP2.play();
                     gunP2Stuff.currentGunP1 --;
                     gunP2Stuff.gun1P2.loadTexture(gunP2Stuff.switchGuns());
                     
