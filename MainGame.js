@@ -225,10 +225,11 @@ var gameVar = {
     machineGunSound: null,
     rocketLaunchSound: null,
     dryFireGunSound: null,
+    footStepsSound: null,
     
     p1GunStuffText: null,
     p2GunStuffText: null,
-    enemySpawnLimit: 50,
+    enemySpawnLimit: 75,
     i: 0,
     w: 0,
     wall: null,
@@ -314,6 +315,7 @@ var gameVar = {
         this.machineGunSound = game.add.audio('machineGunSound');
         this.rocketLaunchSound = game.add.audio('rocketLaunchSound');
         this.dryFireGunSound = game.add.audio("dryFireGunSound");
+        this.footStepsSound = game.add.audio("footStepsSound");
         
     	game.physics.startSystem(Phaser.Physics.P2JS);
         
@@ -527,38 +529,41 @@ var gameVar = {
     spawnNewEnemy: function(){
         for (var ToSpawn = 0; ToSpawn < 5; ToSpawn++){
             if (inter%2 == 1){
-                inter ++;
-                enemyTest2P1 = game.add.sprite(game.world.randomX + game.width, game.world.randomY + game.height, "zombieAnim");
-                enemyTest2P1.scale.x = .2;
-                enemyTest2P1.scale.y = .2;
-                enemyTest2P1.anchor.setTo(.5);
-                game.physics.arcade.enable(enemyTest2P1);
-
-                enemyTest2P1.isDead = false;
-
-                enemyTest2ArrayP1.push(enemyTest2P1);
-
-                enemyTest2P1.animations.add('walkZombieP1', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], 40, true);
-                // enemyTest2P1.animations.add('zombieAtkAnim', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], 40, false);
-    //            var enemyTest2P1AtkAnim = enemyTest2P1.animations.add("zombieAtkAnim", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], 40, false);
-                enemyTest2P1.animations.play("walkZombieP1");
-
+                if (this.enemySpawnLimit >= enemyTest2ArrayP1.length){
+                    inter ++;
+                    enemyTest2P1 = game.add.sprite(game.world.randomX + game.width, game.world.randomY + game.height, "zombieAnim");
+                    enemyTest2P1.scale.x = .2;
+                    enemyTest2P1.scale.y = .2;
+                    enemyTest2P1.anchor.setTo(.5);
+                    game.physics.arcade.enable(enemyTest2P1);
+    
+                    enemyTest2P1.isDead = false;
+    
+                    enemyTest2ArrayP1.push(enemyTest2P1);
+    
+                    enemyTest2P1.animations.add('walkZombieP1', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], 40, true);
+                    // enemyTest2P1.animations.add('zombieAtkAnim', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], 40, false);
+        //            var enemyTest2P1AtkAnim = enemyTest2P1.animations.add("zombieAtkAnim", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], 40, false);
+                    enemyTest2P1.animations.play("walkZombieP1");
+                }
             } else {
-                enemyTest2P2 = game.add.sprite(game.world.randomX - game.width, game.world.randomY - game.height, "zombieAnim");
-                enemyTest2P2.scale.x = .2;
-                enemyTest2P2.scale.y = .2;
-                enemyTest2P2.anchor.setTo(.5);
-                game.physics.arcade.enable(enemyTest2P2);
-
-                enemyTest2P2.isDead = false;
-
-                enemyTest2ArrayP2.push(enemyTest2P2);
-                inter ++;
-
-                enemyTest2P2.animations.add('walkZombieP2', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], 40, true);
-    //            enemyTest2P1.animations.add('zombieAtkAnim', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], 40, false);
-        //            var enemyTest2P2AtkAnim = enemyTest2P1.animations.add("zombieAtkAnim");
-                enemyTest2P2.animations.play("walkZombieP2");
+                if (this.enemySpawnLimit >= enemyTest2ArrayP2.length){
+                    enemyTest2P2 = game.add.sprite(game.world.randomX - game.width, game.world.randomY - game.height, "zombieAnim");
+                    enemyTest2P2.scale.x = .2;
+                    enemyTest2P2.scale.y = .2;
+                    enemyTest2P2.anchor.setTo(.5);
+                    game.physics.arcade.enable(enemyTest2P2);
+    
+                    enemyTest2P2.isDead = false;
+    
+                    enemyTest2ArrayP2.push(enemyTest2P2);
+                    inter ++;
+    
+                    enemyTest2P2.animations.add('walkZombieP2', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], 40, true);
+        //            enemyTest2P1.animations.add('zombieAtkAnim', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], 40, false);
+            //            var enemyTest2P2AtkAnim = enemyTest2P1.animations.add("zombieAtkAnim");
+                    enemyTest2P2.animations.play("walkZombieP2");
+                }
             }
             helper.totalEnemySpawned ++;
             // this.enemySpawnLimit ++;
