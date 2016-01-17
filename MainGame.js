@@ -567,6 +567,21 @@ var gameVar = {
             
             this.enemySpawnLimit = 75;
             
+            if (!this.zombieSounds.zombieSoundP1Num1.isPlaying ){
+                  this.zombieSounds.zombieSoundP1Num1.stop();
+              } else if (!this.zombieSounds.zombieSoundP1Num2.isPlaying ){
+                  this.zombieSounds.zombieSoundP1Num2.stop();
+              } else if (this.zombieSounds.zombieSoundP1Num3.isPlaying){
+                  this.zombieSounds.zombieSoundP1Num3.stop();
+              }
+
+            if (!this.zombieSounds.zombieSoundP2Num1.isPlaying ){
+                  this.zombieSounds.zombieSoundP2Num1.stop();
+                } else if (!this.zombieSounds.zombieSoundP2Num2.isPlaying ){
+                  this.zombieSounds.zombieSoundP2Num2.stop();
+                } else if (this.zombieSounds.zombieSoundP2Num3.isPlaying){
+                  this.zombieSounds.zombieSoundP2Num3.stop();
+                }
 
         }
     },
@@ -822,6 +837,10 @@ var gameVar = {
     
     playerDead: function(player){
         
+    },
+    
+    killBullet: function (wall, bullet){
+        bullet.kill();
     },
     
     reDrawEveryThing: function(){
@@ -1344,6 +1363,14 @@ var gameVar = {
                       wallStuff.wallArray[i].body.static = true;
                       game.physics.arcade.collide(hi, wallStuff.wallArray[i], null, null, this);
                       game.physics.arcade.collide(p2, wallStuff.wallArray[i], null, null, this);
+                      
+                      if (helper.bullets != null){
+                          game.physics.arcade.collide(wallStuff.wallArray[i], helper.bullets, this.killBullet, null, this);
+                      }
+                      
+                      if (helper.bulletsP2 != null){
+                          game.physics.arcade.collide(wallStuff.wallArray[i], helper.bulletsP2, this.killBullet, null, this);
+                      }
                       
                     //   if (helper.bullets != null){
                     //      game.physics.arcade.overlap(helper.bullets, wallStuff.wallArray[i], function killBullet(){
