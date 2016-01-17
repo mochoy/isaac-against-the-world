@@ -240,9 +240,18 @@ var gameVar = {
     rocketLaunchSound: null,
     dryFireGunSound: null,
     footStepsSound: null,
+    
     weaponSwitchSoundP1: null,
     weaponSwitchSoundP2: null,
-
+    
+    zombieSounds: {
+        zombieSoundP1Num1: null, 
+        zombieSoundP1Num2: null, 
+        zombieSoundP1Num3: null, 
+        zombieSoundP2Num1: null, 
+        zombieSoundP2Num2: null, 
+        zombieSoundP2Num3: null
+    },
     
     p1GunStuffText: null,
     p2GunStuffText: null,
@@ -337,7 +346,13 @@ var gameVar = {
         this.footStepsSound = game.add.audio("footStepsSound");
         this.weaponSwitchSoundP1 = game.add.audio("gunClickSound");
         this.weaponSwitchSoundP2 = game.add.audio("gunClickSound");
-
+        
+        this.zombieSounds.zombieSoundP1Num1 = game.add.audio("zombieSound");
+        this.zombieSounds.zombieSoundP1Num2 = game.add.audio("zombieSound");
+        this.zombieSounds.zombieSoundP1Num3 = game.add.audio("zombieSound");
+        this.zombieSounds.zombieSoundP2Num1 = game.add.audio("zombieSound");
+        this.zombieSounds.zombieSoundP2Num2 = game.add.audio("zombieSound");
+        this.zombieSounds.zombieSoundP2Num3 = game.add.audio("zombieSound");
         
     	game.physics.startSystem(Phaser.Physics.P2JS);
         
@@ -754,6 +769,24 @@ var gameVar = {
       // enemy.play("enemyTest2P1AtkAnim");
 
       if (!enemy.isRunning) {
+          if (player == hi){
+              if (!this.zombieSounds.zombieSoundP1Num1.isPlaying ){
+                  this.zombieSounds.zombieSoundP1Num1.play();
+              } else if (!this.zombieSounds.zombieSoundP1Num2.isPlaying ){
+                  this.zombieSounds.zombieSoundP1Num2.play();
+              } else if (this.zombieSounds.zombieSoundP1Num3.isPlaying){
+                  this.zombieSounds.zombieSoundP1Num3.play();
+              }
+          } else {
+            if (!this.zombieSounds.zombieSoundP2Num1.isPlaying ){
+                  this.zombieSounds.zombieSoundP2Num1.play();
+                } else if (!this.zombieSounds.zombieSoundP2Num2.isPlaying ){
+                  this.zombieSounds.zombieSoundP2Num2.play();
+                } else if (this.zombieSounds.zombieSoundP2Num3.isPlaying){
+                  this.zombieSounds.zombieSoundP2Num3.play();
+                }
+          }
+          
       	var fl = new Flagger(enemy);
       	fl.set();	//isRunning=true;
       	setTimeout( new OOCallback(fl,"clear").fcn, 2000 );	//isRunning=false;
@@ -1045,7 +1078,6 @@ var gameVar = {
                 }
 
                 if (keyW.isDown){
-                    this.zombieSound.play();
                     p2.body.velocity.y = - 300;
                     p2FacingDirection = 0;
                     console.log("player 2 moved up");
