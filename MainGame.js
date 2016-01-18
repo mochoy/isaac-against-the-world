@@ -60,6 +60,9 @@ var helper = {
     canP1Shoot: true,
     canP2Shoot: true,
     
+    canP1SwitchWeapons: true,
+    canP2SwitchWeapons: true,
+
     deleteMarkedElements : function( at, mark ){
         var arrayToAdd = new Array();
         for (var i = 0; i < at.length; i ++){
@@ -408,6 +411,9 @@ var gameVar = {
             helper.canP1Shoot = true;
             helper.canP2Shoot = true;
             
+            helper.canP1SwitchWeapons = true;
+            helper.canP2SwitchWeapons = true;
+            
             hi = game.add.sprite(game.world.centerX*4/3, game.world.centerY, "p1Anim");
             game.physics.arcade.enable(hi);
             game.physics.p2.enable(hi);
@@ -568,6 +574,9 @@ var gameVar = {
             
             helper.canP1Shoot = false;
             helper.canP2Shoot = false;
+            
+            helper.canP1SwitchWeapons = false;
+            helper.canP2SwitchWeapons = false;
             
             this.p1GunStuffText.kill();
             this.p2GunStuffText.kill();
@@ -1097,6 +1106,7 @@ var gameVar = {
                 }
 
                 if (keyL.isDown){
+                    
                     this.weaponSwitchSoundP1.play();
                     gunP1Stuff.currentGunP1 ++;
                     gunP1Stuff.gun1P1.loadTexture(gunP1Stuff.switchGuns());
