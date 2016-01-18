@@ -54,6 +54,12 @@ var helper = {
     bullets: null,
     bulletsP2: null,
     
+    canP1Move: true,
+    canP2Move: true,
+    
+    canP1Shoot: true,
+    canP2Shoot: true,
+    
     deleteMarkedElements : function( at, mark ){
         var arrayToAdd = new Array();
         for (var i = 0; i < at.length; i ++){
