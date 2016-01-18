@@ -6,6 +6,13 @@ To Add (Small):
     - Scale explosion on each frame to give explosion effect
     - Enemy rotate to player when attack animation is played
     
+    - Player move diagonal with 2 keys pressed at same time:
+        - check if both keys are down
+        - set a velocity x and y
+        - new facing direction
+        - angle bullet if shooting
+        - angle body of player
+    
 
 To Add (Big):
     - Weapon Unlock System

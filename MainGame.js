@@ -1190,6 +1190,7 @@ var gameVar = {
                     p2.animations.stop();
                     p2.frame = 0;
                 }
+                
                
                 if (keyV.isDown){
                   if (gunP2Stuff.currentGunNumP1 == 2 && Math.floor(gunP2Stuff.shotgunBullets) <= 0){
