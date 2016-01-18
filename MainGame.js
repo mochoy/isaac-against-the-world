@@ -1,4 +1,4 @@
-//MainGame.js 1-12-2016 MJChoy fix pseudo-staic walls
+//MainGame.js 1-18-2016 MJChoy Ready to Record!
 
 //static: http://phaser.io/examples/v2/p2-physics/static-body
 
