@@ -402,6 +402,12 @@ var gameVar = {
             
             this.backGround = game.add.tileSprite(0, 0, game.world.width, game.world.height, "backGroundIMG");
             
+            helper.canP1Move = true;
+            helper.canP2Move = true;
+            
+            helper.canP1Shoot = true;
+            helper.canP2Shoot = true;
+            
             hi = game.add.sprite(game.world.centerX*4/3, game.world.centerY, "p1Anim");
             game.physics.arcade.enable(hi);
             game.physics.p2.enable(hi);
@@ -556,6 +562,12 @@ var gameVar = {
                 this.deadScreen.scale.y = 1.25;
                 console.log("p2 win");
             }
+            
+            helper.canP1Move = false;
+            helper.canP2Move = false;
+            
+            helper.canP1Shoot = false;
+            helper.canP2Shoot = false;
             
             this.p1GunStuffText.kill();
             this.p2GunStuffText.kill();
@@ -942,143 +954,146 @@ var gameVar = {
 
                 //controls
                 if (keyK.isDown){
-                    if (gunP1Stuff.currentGunNumP1 == 2 && Math.floor(gunP1Stuff.shotgunBullets) <= 0){
-                        //play empty gun sound
-                        this.dryFireGunSound.play();
-                        console.log(gunP1Stuff.currentGunNumP1 + " is out of bullets!");
-                      } else if (gunP1Stuff.currentGunNumP1 == 3 && gunP1Stuff.machineGunBullets <= 0){
-                          this.dryFireGunSound.play();
-                        //play empty gun sound
-                        console.log(gunP1Stuff.currentGunNumP2 + " is out of bullets!");
-                      } else if (gunP1Stuff.currentGunNumP1 == 4 && gunP1Stuff.rocketBullets <= 0){
-                         //play empty gun sound
-                         this.dryFireGunSound.play();
-                        console.log(gunP1Stuff.currentGunNumP1 + " is out of bullets!");
-                      } else  {
-                        if (gunP1Stuff.gun1P1.game.time.time > gunP1Stuff.gun1P1.nextFire){
-                        for (var i = 0; i < gunP1Stuff.bulletsToSpawn; i++){
-                            var bulletSpawnX, bulletSpawnY;
+                    if (helper.canP1Shoot == true){
+                        if (gunP1Stuff.currentGunNumP1 == 2 && Math.floor(gunP1Stuff.shotgunBullets) <= 0){
+                            //play empty gun sound
+                            this.dryFireGunSound.play();
+                            console.log(gunP1Stuff.currentGunNumP1 + " is out of bullets!");
+                          } else if (gunP1Stuff.currentGunNumP1 == 3 && gunP1Stuff.machineGunBullets <= 0){
+                              this.dryFireGunSound.play();
+                            //play empty gun sound
+                            console.log(gunP1Stuff.currentGunNumP2 + " is out of bullets!");
+                          } else if (gunP1Stuff.currentGunNumP1 == 4 && gunP1Stuff.rocketBullets <= 0){
+                             //play empty gun sound
+                             this.dryFireGunSound.play();
+                            console.log(gunP1Stuff.currentGunNumP1 + " is out of bullets!");
+                          } else  {
+                            if (gunP1Stuff.gun1P1.game.time.time > gunP1Stuff.gun1P1.nextFire){
+                            for (var i = 0; i < gunP1Stuff.bulletsToSpawn; i++){
+                                var bulletSpawnX, bulletSpawnY;
+                                
+                                if (hiFacingDirection == 0){
+                                    bulletSpawnX = hi.body.x + hi.body.width;
+                                    bulletSpawnY = hi.body.y;
+                                } else if (hiFacingDirection == 1 ){
+                                    bulletSpawnX = hi.body.x;
+                                    bulletSpawnY = hi.body.y + hi.body.width;
+                                } else if (hiFacingDirection == 2 ){
+                                    bulletSpawnX = hi.body.x + hi.body.width;
+                                    bulletSpawnY = hi.body.y + hi.body.width;
+                                } else if (hiFacingDirection == 3 ){
+                                    bulletSpawnX = hi.body.x;
+                                    bulletSpawnY = hi.body.y ;
+                                }
                             
-                            if (hiFacingDirection == 0){
-                                bulletSpawnX = hi.body.x + hi.body.width;
-                                bulletSpawnY = hi.body.y;
-                            } else if (hiFacingDirection == 1 ){
-                                bulletSpawnX = hi.body.x;
-                                bulletSpawnY = hi.body.y + hi.body.width;
-                            } else if (hiFacingDirection == 2 ){
-                                bulletSpawnX = hi.body.x + hi.body.width;
-                                bulletSpawnY = hi.body.y + hi.body.width;
-                            } else if (hiFacingDirection == 3 ){
-                                bulletSpawnX = hi.body.x;
-                                bulletSpawnY = hi.body.y ;
+                                helper.bullets = game.add.sprite(bulletSpawnX , bulletSpawnY , "bulletIMG");
+                                game.physics.arcade.enable(helper.bullets);
+                                
+                                if (hiFacingDirection == 0){
+                                    helper.bullets.body.velocity.y = -2000;
+                                    helper.bullets.angle = 0;
+                                } else if (hiFacingDirection == 1 ){
+                                    helper.bullets.body.velocity.y = 2000;
+                                    helper.bullets.angle = 180;
+                                } else if (hiFacingDirection == 2 ){
+                                    helper.bullets.body.velocity.x = 2000;
+                                    helper.bullets.angle = 90;
+                                } else if (hiFacingDirection == 3 ){
+                                    helper.bullets.body.velocity.x = -2000;
+                                    helper.bullets.angle = 270;
+                                }
+                                
+                                if (gunP1Stuff.currentGunNumP1 == 4){
+                                  console.log("current gun is rocket");
+                                  helper.bullets.scale.x = 0.04;
+                                  helper.bullets.scale.y = 0.08;
+                                } else {
+                                  helper.bullets.scale.x = .02;
+                                  helper.bullets.scale.y = .04;
+                                }
+                                
+                                helper.bullets.outOfBoundsKill = true;
+                                helper.bulletArrayP1.push(helper.bullets);
+                                
+                                if (gunP1Stuff.currentGunNumP1  == 1 ){
+                                  this.p1GunStuffText.text = "Pistol";
+                                  this.pistolSound.play();
+                                } else if (gunP1Stuff.currentGunNumP1 == 2){
+                                  this.shotgunSound.play();
+                                  gunP1Stuff.shotgunBullets -= 0.2;
+                                  this.p1GunStuffText.text = "Shotgun: " + Math.floor(gunP1Stuff.shotgunBullets);
+                                } else if (gunP1Stuff.currentGunNumP1 == 3){
+                                  this.machineGunSound.play();
+                                  gunP1Stuff.machineGunBullets --;
+                                  this.p1GunStuffText.text = "Machine Gun: " + gunP1Stuff.machineGunBullets;
+                                } else if (gunP1Stuff.currentGunNumP1 == 4){
+                                  this.rocketLaunchSound.play();
+                                  gunP1Stuff.rocketBullets --;
+                                  this.p1GunStuffText.text = "RPG: " + gunP1Stuff.rocketBullets;
+                                }
+                                
+                                if (i <= 0) {
+                                  if ( (hiFacingDirection == 0)||(hiFacingDirection == 1) ){
+                                    helper.bullets.body.velocity.x = gunP1Stuff.weaponInaccuracy*(Math.random() - 0.5);
+                                  } else {
+                                    helper.bullets.body.velocity.y = gunP1Stuff.weaponInaccuracy*(Math.random() - 0.5);
+                                  }
+                                }
+    
+                                if ((i > 0) && ((hiFacingDirection == 0)||(hiFacingDirection == 1))) {
+                                    helper.bullets.body.velocity.x = gunP1Stuff.weaponInaccuracy*(Math.random()- 0.5);
+    
+                                } else if (i > 0) {
+                                    helper.bullets.body.velocity.y = gunP1Stuff.weaponInaccuracy*(Math.random()- 0.5);
+                                }
                             }
-                        
-                            helper.bullets = game.add.sprite(bulletSpawnX , bulletSpawnY , "bulletIMG");
+    
+            /*                    helper.bullets = game.add.sprite(gunP1Stuff.gun1P1.body.x , gunP1Stuff.gun1P1.body.y , "bulletIMG");
                             game.physics.arcade.enable(helper.bullets);
-                            
-                            if (hiFacingDirection == 0){
-                                helper.bullets.body.velocity.y = -2000;
-                                helper.bullets.angle = 0;
-                            } else if (hiFacingDirection == 1 ){
-                                helper.bullets.body.velocity.y = 2000;
-                                helper.bullets.angle = 180;
-                            } else if (hiFacingDirection == 2 ){
-                                helper.bullets.body.velocity.x = 2000;
-                                helper.bullets.angle = 90;
-                            } else if (hiFacingDirection == 3 ){
-                                helper.bullets.body.velocity.x = -2000;
-                                helper.bullets.angle = 270;
-                            }
-                            
-                            if (gunP1Stuff.currentGunNumP1 == 4){
-                              console.log("current gun is rocket");
-                              helper.bullets.scale.x = 0.04;
-                              helper.bullets.scale.y = 0.08;
-                            } else {
-                              helper.bullets.scale.x = .02;
-                              helper.bullets.scale.y = .04;
-                            }
-                            
+                            bullets.physicsBodyType = Phaser.Physics.P2JS;
+                            bullets.body.setCollisionGroup(bulletCollisionGroup);
+                            bullets.body.collides(enemyCollisionGroup, hit, this);
+                            helper.bullets.scale.x = .01;
+                            helper.bullets.scale.y = .02;
                             helper.bullets.outOfBoundsKill = true;
-                            helper.bulletArrayP1.push(helper.bullets);
-                            
-                            if (gunP1Stuff.currentGunNumP1  == 1 ){
-                              this.p1GunStuffText.text = "Pistol";
-                              this.pistolSound.play();
-                            } else if (gunP1Stuff.currentGunNumP1 == 2){
-                              this.shotgunSound.play();
-                              gunP1Stuff.shotgunBullets -= 0.2;
-                              this.p1GunStuffText.text = "Shotgun: " + Math.floor(gunP1Stuff.shotgunBullets);
-                            } else if (gunP1Stuff.currentGunNumP1 == 3){
-                              this.machineGunSound.play();
-                              gunP1Stuff.machineGunBullets --;
-                              this.p1GunStuffText.text = "Machine Gun: " + gunP1Stuff.machineGunBullets;
-                            } else if (gunP1Stuff.currentGunNumP1 == 4){
-                              this.rocketLaunchSound.play();
-                              gunP1Stuff.rocketBullets --;
-                              this.p1GunStuffText.text = "RPG: " + gunP1Stuff.rocketBullets;
+                            helper.bulletArrayP1.push(helper.bullets); */
+    
+            /*                setTimeout(function() {
+                                bullets.kill();
+                            }, 500); */
+                            gunP1Stuff.gun1P1.nextFire = gunP1Stuff.gun1P1.game.time.time + gunP1Stuff.fireRateP1;
                             }
-                            
-                            if (i <= 0) {
-                              if ( (hiFacingDirection == 0)||(hiFacingDirection == 1) ){
-                                helper.bullets.body.velocity.x = gunP1Stuff.weaponInaccuracy*(Math.random() - 0.5);
-                              } else {
-                                helper.bullets.body.velocity.y = gunP1Stuff.weaponInaccuracy*(Math.random() - 0.5);
-                              }
-                            }
-
-                            if ((i > 0) && ((hiFacingDirection == 0)||(hiFacingDirection == 1))) {
-                                helper.bullets.body.velocity.x = gunP1Stuff.weaponInaccuracy*(Math.random()- 0.5);
-
-                            } else if (i > 0) {
-                                helper.bullets.body.velocity.y = gunP1Stuff.weaponInaccuracy*(Math.random()- 0.5);
-                            }
-                        }
-
-        /*                    helper.bullets = game.add.sprite(gunP1Stuff.gun1P1.body.x , gunP1Stuff.gun1P1.body.y , "bulletIMG");
-                        game.physics.arcade.enable(helper.bullets);
-                        bullets.physicsBodyType = Phaser.Physics.P2JS;
-                        bullets.body.setCollisionGroup(bulletCollisionGroup);
-                        bullets.body.collides(enemyCollisionGroup, hit, this);
-                        helper.bullets.scale.x = .01;
-                        helper.bullets.scale.y = .02;
-                        helper.bullets.outOfBoundsKill = true;
-                        helper.bulletArrayP1.push(helper.bullets); */
-
-        /*                setTimeout(function() {
-                            bullets.kill();
-                        }, 500); */
-                        gunP1Stuff.gun1P1.nextFire = gunP1Stuff.gun1P1.game.time.time + gunP1Stuff.fireRateP1;
                         }
                     }
                 }
 
-                if (cursors.left.isDown){
-                    hi.animations.play('walkP1');
-                    hi.body.velocity.x = - 300;
-                    hiFacingDirection = 3;
-                    hi.angle = 270;
-                } else if (cursors.right.isDown){
-                    hi.animations.play('walkP1');
-                    hi.body.velocity.x = 300;
-                    hiFacingDirection = 2;
-                    hi.angle = 90;
-                } else if (cursors.down.isDown){
-                    hi.animations.play('walkP1');
-                    hi.body.velocity.y = 300;
-                    hiFacingDirection = 1;
-                    hi.angle = 180;
-                } else if (cursors.up.isDown){
-                    hi.animations.play('walkP1');
-                    hi.body.velocity.y = - 300;
-                    hiFacingDirection = 0;
-                    hi.angle = 0;
-                } else {
-                    hi.body.velocity.x = 0;
-                    hi.body.velocity.y = 0;
-                    hi.animations.stop();
-                    hi.frame = 0;
-                
+                if (helper.canP1Move){
+                    if (cursors.left.isDown){
+                        hi.animations.play('walkP1');
+                        hi.body.velocity.x = - 300;
+                        hiFacingDirection = 3;
+                        hi.angle = 270;
+                    } else if (cursors.right.isDown){
+                        hi.animations.play('walkP1');
+                        hi.body.velocity.x = 300;
+                        hiFacingDirection = 2;
+                        hi.angle = 90;
+                    } else if (cursors.down.isDown){
+                        hi.animations.play('walkP1');
+                        hi.body.velocity.y = 300;
+                        hiFacingDirection = 1;
+                        hi.angle = 180;
+                    } else if (cursors.up.isDown){
+                        hi.animations.play('walkP1');
+                        hi.body.velocity.y = - 300;
+                        hiFacingDirection = 0;
+                        hi.angle = 0;
+                    } else {
+                        hi.body.velocity.x = 0;
+                        hi.body.velocity.y = 0;
+                        hi.animations.stop();
+                        hi.frame = 0;
+                    }
                 }
 
                 if (keyL.isDown){
