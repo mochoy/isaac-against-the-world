@@ -808,7 +808,7 @@ var gameVar = {
       	
         enemy.loadTexture("zombieAtkAnim", 0);
         anim = enemy.animations.add("attackAnim");
-        enemy.animations.play("attackAnim", 40, false);
+        enemy.animations.play("attackAnim", 20, false);
         
         enemy.events.onAnimationComplete.add( new OOCallback(fl,"clear").fcn, this );
         enemy.events.onAnimationComplete.add(function(){
