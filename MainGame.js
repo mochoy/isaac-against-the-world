@@ -1517,7 +1517,7 @@ var gameVar = {
                     }
                 } //for 
                 
-                enemyTest2ArrayP2 = helper.deleteMarkedElements( enemyTest2ArrayP1, "isToDel" );
+                enemyTest2ArrayP2 = helper.deleteMarkedElements( enemyTest2ArrayP2, "isToDel" );
 
                 
                 if (healthP1 <= 0){
