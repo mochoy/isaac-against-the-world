@@ -841,6 +841,36 @@ var gameVar = {
     
     killBullet: function (wall, bullet){
         bullet.kill();
+        
+        
+        if (bullet == helper.bullets && gunP1Stuff.currentGunNumP1 == 4){
+            gunP1Stuff.explosion = game.add.sprite(bullet.body.x, bullet.body.y, "explosionAnim");
+            game.physics.arcade.enable(gunP1Stuff.explosion);
+            gunP1Stuff.explosion.scale.x = .25;
+            gunP1Stuff.explosion.scale.y = .25;
+            gunP1Stuff.explosion.anchor.setTo(0.5);
+            gunP1Stuff.explosion.animations.add('explodeAnim', [0, 1, 2, 3, 4, 5, 6], 10, false);
+            explosionAnim = gunP1Stuff.explosion.animations.play('explodeAnim');
+            explosionAnim.killOnComplete = true;
+            
+            gunP1Stuff.explosionArray.push(gunP1Stuff.explosion);
+            
+            this.explosionSound.play();
+        } else if (bullet == helper.bulletsP2 && gunP2Stuff.currentGunNumP1 == 4){
+            gunP2Stuff.explosion = game.add.sprite(bullet.body.x, bullet.body.y, "explosionAnim");
+            game.physics.arcade.enable(gunP2Stuff.explosion);
+            gunP2Stuff.explosion.scale.x = .25;
+            gunP2Stuff.explosion.scale.y = .25;
+            gunP2Stuff.explosion.anchor.setTo(0.5);
+            gunP2Stuff.explosion.animations.add('explodeAnim', [0, 1, 2, 3, 4, 5, 6], 10, false);
+            explosionAnim = gunP2Stuff.explosion.animations.play('explodeAnim');
+            explosionAnim.killOnComplete = true;
+            
+            gunP2Stuff.explosionArrayP2.push(gunP2Stuff.explosion);
+            
+            this.explosionSound.play();
+        }
+            
     },
     
     reDrawEveryThing: function(){
