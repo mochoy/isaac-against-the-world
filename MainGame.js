@@ -794,6 +794,8 @@ var gameVar = {
             scoreTXTP2.text = "Score: " + scoreP2;
             p2Stuff.totalKilledP2 ++;
         }
+        
+        enemy.isToDel = true;
         enemy.kill();
         
         var bloodSpat = game.add.sprite(enemy.body.x,enemy.body.y, "blood");
