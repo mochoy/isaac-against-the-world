@@ -5,6 +5,7 @@ To Add (Small):
     - Walking sound
     - Scale explosion on each frame to give explosion effect
     - Enemy rotate to player when attack animation is played
+    - Pause button
     
     - Player move diagonal with 2 keys pressed at same time:
         - check if both keys are down
